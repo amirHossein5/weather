@@ -1,0 +1,53 @@
+@import './variables.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+    @font-face {
+        font-family: 'vazirmatn';
+        src: url('@vendor/fonts/Vazirmatn[wght].ttf');
+        size-adjust: 90%;
+    }
+
+    *,
+    ::before,
+    ::after {
+        font-family: vazirmatn, sans-serif;
+    }
+
+    .cursor-pointer {
+        @apply select-none;
+    }
+}
+
+@layer components {
+    .badge {
+        @apply flex justify-center transition items-center p-1 rounded hover:badge-active;
+    }
+    .badge-smooth {
+        @apply badge hover:badge-active-smooth;
+    }
+    .badge-active {
+        background-color: var(--active-badge-bg-color);
+    }
+    .badge-active-smooth {
+        background-color: var(--active-badge-bg-smooth-color);
+    }
+
+    .blurred::after {
+        /* preventing clicking something */
+        content: '';
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        @apply z-50;
+    }
+    .blurred {
+        position: relative;
+        @apply blur-md animate-pulse;
+    }
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Weather forecast</title>
+
+        <link rel="stylesheet" type="text/css" href="vendor/css/app.css" />
+    </head>
+
+    <style></style>
+
+    <body class="text-[var(--text-color)] overflow-y-hidden">
+        <header class="pt-7 pb-1 bg-[var(--weather-smooth-bg-color)] blurred">
+            <section class="container mx-auto">
+                <section
+                    class="flex xs:flex-row flex-col md:items-end xs:items-start items-center justify-between xs:gap-2 gap-4"
+                >
+                    <div class="flex gap-0 flex-row items-start">
+                        <div class="">
+                            <img class="w-20" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" />
+                        </div>
+                        <span class="text-7xl self-end">13</span>
+                        <div
+                            class="text-lg flex items-center gap-1"
+                            x-data="{ cIsActive: true, activeClass: 'badge-active', unActiveClass: 'text-[var(--disabled-text-color)]' }"
+                        >
+                            <span
+                                class="pb-0 font-bold cursor-pointer p-1 rounded"
+                                x-bind:class="{ [unActiveClass]: !cIsActive, [activeClass]: cIsActive }"
+                                x-on:click="cIsActive=true"
+                                >&deg;C</span
+                            >
+                            <div class="border-r h-5"></div>
+                            <span
+                                class="pb-0 font-bold cursor-pointer p-1 rounded"
+                                x-bind:class="{ [unActiveClass]: cIsActive, [activeClass]: !cIsActive }"
+                                x-on:click="cIsActive=false"
+                                >&deg;F</span
+                            >
+                        </div>
+                    </div>
+                    <div class="flex flex-col xs:items-start items-center">
+                        <p class="md:text-xl xs:text-lg text-xl font-medium">Sunday</p>
+                        <p class="md:p-2 xs:p-1 p-2 rounded leading-4 font-medium bg-[var(--weather-bg-color)]">
+                            Mostly sunny
+                        </p>
+                    </div>
+                </section>
+
+                <section
+                    class="xs:mt-4 mt-10 flex xs:justify-start justify-center gap-2"
+                    x-data="{ activeTab: 'temp', activeClass: 'border-b border-b-[var(--active-border-color)] border-b-4'}"
+                >
+                    <div
+                        class="font-medium cursor-pointer px-2"
+                        x-bind:class="{ [activeClass]: activeTab === 'temp' }"
+                        x-on:click="activeTab='temp'"
+                    >
+                        Temperature
+                    </div>
+                    <div class="border-r last:border-r-0 h-5"></div>
+
+                    <div
+                        class="font-medium cursor-pointer px-2"
+                        x-bind:class="{ [activeClass]: activeTab === 'precip' }"
+                        x-on:click="activeTab='precip'"
+                    >
+                        Precipitation
+                    </div>
+                    <div class="border-r last:border-r-0 h-5"></div>
+
+                    <div
+                        class="font-medium cursor-pointer px-2"
+                        x-bind:class="{ [activeClass]: activeTab === 'wind' }"
+                        x-on:click="activeTab='wind'"
+                    >
+                        Wind
+                    </div>
+                    <div class="border-r last:border-r-0 h-5"></div>
+                </section>
+            </section>
+        </header>
+
+        <main>
+            <section class="container mx-auto blurred">
+                <section id="weather-chart" class="2xl:px-10"></section>
+
+                <section
+                    id="days"
+                    class="flex flex-wrap justify-center gap-1"
+                    x-data="{
+                        activeDay: 0,
+                        activeClass: 'badge-active-smooth border-2 border-[var(--active-border-color)]',
+                        unActiveClass: 'border-2 border-[var(--hidden-color)]'
+                    }"
+                >
+                    <template x-for="(day, index) in [1,1,1,1,1,1,1]">
+                        <div
+                            class="rounded-2xl p-1 px-3 badge-smooth flex-col cursor-pointer"
+                            x-bind:class="{ [activeClass]: activeDay === index, [unActiveClass]: activeDay !== index }"
+                            x-on:click="activeDay=index"
+                        >
+                            <h6 class="font-medium">Sunday</h6>
+                            <img class="w-16" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" />
+                            <div>
+                                <span class="text-sm font-semibold"> <span>13</span>&deg; </span>
+                                <span class="text-sm font-semibold text-[var(--disabled-text-color)]">
+                                    <span>3</span>&deg;
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                </section>
+
+                <section
+                    class="mt-40 border-t py-3 flex flex-wrap gap-x-6 gap-y-2 justify-center items-baseline lg:font-medium lg:text-base font-semibold text-sm leading-5"
+                >
+                    <div>
+                        <span class="text-[var(--light-text-color)]">Precipitation:</span>
+                        <span>0%</span>
+                    </div>
+                    <div>
+                        <span class="text-[var(--light-text-color)]">Humidity:</span>
+                        <span>41%</span>
+                    </div>
+                    <div>
+                        <span class="text-[var(--light-text-color)]">Wind:</span>
+                        <span>11 km/h</span>
+                    </div>
+                </section>
+            </section>
+        </main>
+
+        <section class="absolute md:top-10 sm:top-5 top-0 right-0 left-0 bottom-0 hidden">
+            <section class="flex xs:h-auto h-full justify-center">
+                <form
+                    id="locationForm"
+                    class="bg-[var(--theme-bg)] pt-6 pb-4 px-1 xs:w-auto w-full border rounded sm:rounded-t rounded-t-none"
+                    x-data="locationForm"
+                >
+                    <div class="px-3 flex gap-2 xs:justify-center xs:items-start items-center xs:flex-row flex-col">
+                        <input
+                            type="text"
+                            id="cityInput"
+                            class="outline-none border rounded p-2 xs:w-auto w-full"
+                            x-on:input.debounce.800="updateCities()"
+                            x-on:keydown.window.prevent.slash="$el.focus()"
+                            x-model="keyword"
+                        />
+
+                        <button
+                            class="px-2 xs:py-2 py-1 bg-green-800 text-white w-full rounded"
+                            x-bind:disabled="loading"
+                            x-bind:class="{ 'bg-green-900': loading }"
+                            type="button"
+                            x-on:click="updateCities()"
+                        >
+                            <!-- prettier-ignore -->
+                            <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke=""></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" style="--darkreader-inline-fill: currentColor;" data-darkreader-inline-fill=""></path>
+                            </svg>
+
+                            search for city
+                        </button>
+                    </div>
+
+                    <div x-show="cities.length !== 0" class="mt-5"></div>
+
+                    <div class="max-h-[calc(100vh-13rem)] overflow-y-auto text-[var(--font-color)] px-1">
+                        <template x-for="(city, index) in cities">
+                            <button
+                                type="button"
+                                x-on:click="selectedCityIndex=index"
+                                x-bind:class="{ 'bg-green-700 text-white': selectedCityIndex === index }"
+                                class="focus:outline-none focus:border-blue-200 border border-[var(--hidden-color)] rounded px-1 py-2 w-full cursor-pointer flex items-center gap-2 sm:gap-3 border-b"
+                            >
+                                <div>
+                                    <img x-bind:src="city.countryIconUrl" class="sm:w-8 w-6 rounded" />
+                                </div>
+                                <div>
+                                    <span x-text="city.name"></span>
+                                    <span x-show="city.province !== '' && city.province !== undefined" x-text="', '+city.province"></span>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+
+                    <div class="px-1" x-show="cities.length !== 0">
+                        <button
+                            class="p-1 w-full mt-6 bg-green-800 text-white rounded"
+                            x-bind:disabled="loading"
+                            x-bind:class="{ 'bg-green-900': loading }"
+                            x-on:click.prevent="setLocalStorageData()"
+                        >
+                            <!-- prettier-ignore -->
+                            <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke=""></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" style="--darkreader-inline-fill: currentColor;" data-darkreader-inline-fill=""></path>
+                            </svg>
+
+                            Get weather
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </section>
+
+        <script type="module" src="vendor/js/app.js"></script>
+        <script>
+            function locationForm() {
+                return {
+                    loading: false,
+                    selectedCityIndex: undefined,
+                    cities: [],
+                    keyword: '',
+                    updateCities() {
+                        this.selectedCityIndex = undefined;
+                        this.loading = true;
+
+                        getCities(this.keyword).then((cities) => {
+                            this.cities = cities;
+                            this.loading = false;
+                        }).catch((err) => {
+                            alerts().swal().mixin('error', 'failed to get cities..')
+                            this.loading = false;
+                        });
+                    },
+                    setLocalStorageData() {
+                        if (!(this.selectedCityIndex in this.cities)) {
+                            alerts().swal().mixin('error', 'select your city')
+                            return
+                        }
+
+                        this.loading = true;
+                        city = this.cities[this.selectedCityIndex];
+
+                        setLocalStorageData({
+                            lat: city.latitude,
+                            long: city.longitude,
+                            timezone: city.timezone,
+                            city: city.name,
+                            province: city.province,
+                        });
+
+                        location.reload();
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

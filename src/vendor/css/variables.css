@@ -1,0 +1,18 @@
+:root {
+    --theme-bg: theme('colors.white'); /* dark: #202124 */
+    --hidden-color: var(--theme-bg); /* same with background to make element hidden */
+    --weather-bg-color: theme('colors.yellow.300');
+    --weather-smooth-bg-color: theme('colors.yellow.100');
+
+    --active-badge-bg-color: var(--weather-bg-color);
+    --active-badge-bg-smooth-color: var(--weather-smooth-bg-color);
+
+    --chart-color: rgba(255, 204, 0, 0.2);
+    --chart-border-top-color: #fc0;
+
+    --text-color: theme('colors.gray.700');
+    --light-text-color: theme('colors.gray.500');
+    --disabled-text-color: theme('colors.gray.400');
+
+    --active-border-color: theme('colors.yellow.400');
+}
