@@ -1,11 +1,9 @@
-import ApexCharts from 'apexcharts';
-
 const root = getComputedStyle(document.body);
 
-var options = {
+export let options = {
     series: [
         {
-            data: [9, 6, 4, 2, 6, 4, 2, 6, 9, 6, 4, 2, 6, 4, 2, 6, 17, 12, 5, 0],
+            data: [7, 4, 6],
         },
     ],
     yaxis: {
@@ -17,6 +15,7 @@ var options = {
         },
         // categories: ['Jan','fsdf,', 'Feb', 'Mar', 'Dec', 'fasdf', 'sadfs'],
         labels: {
+            // show: false,
             style: {
                 colors: '#6c6c6c',
                 fontWeight: '600',
@@ -31,7 +30,7 @@ var options = {
     },
     chart: {
         height: 130,
-        width: '100%',
+        width: '150px',
         type: 'area',
         zoom: false,
         toolbar: {
@@ -61,6 +60,10 @@ var options = {
     },
     grid: {
         show: false,
+        padding: {
+            left: 0,
+            right: 0,
+        },
     },
     plotOptions: {
         area: {
@@ -84,6 +87,3 @@ var options = {
     }],
 };
 
-export default function chart(querySelector) {
-    return new ApexCharts(querySelector, options)
-}

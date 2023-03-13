@@ -30,8 +30,8 @@ export function setLocalStorageData({ lat, long, timezone, city, province }) {
  * @return {Boolean}
  */
 export function hasRequiredData() {
-    const notBlankKeys = ['lat', 'long', 'timezone', 'city'];
-    const requiredKeys = ['province'];
+    const notBlankValueKeys = ['lat', 'long', 'timezone', 'city', 'province'];
+    const requiredKeys = []; // value of the key may be blank
 
     for (let index in requiredKeys) {
         let key = requiredKeys[index];
@@ -41,8 +41,8 @@ export function hasRequiredData() {
         }
     }
 
-    for (let index in notBlankKeys) {
-        let key = notBlankKeys[index];
+    for (let index in notBlankValueKeys) {
+        let key = notBlankValueKeys[index];
 
         // prettier-ignore
         if ( !(key in localStorage)
@@ -54,4 +54,72 @@ export function hasRequiredData() {
     }
 
     return true;
+}
+
+/**
+ * Gives every element for given data attribute name(s) to closure.
+ * @param {String} dataName
+ * @param {closure} closure
+ * @param {closure} selector
+ */
+export function setElementsData(dataName, closure, selector = document) {
+    selector.querySelectorAll(`[data-${dataName}]`).forEach((el) => {
+        closure(el)
+    })
+}
+
+/**
+ * Returns appropriate value based on current media query breakpoints
+ * @param  {Object} breakPointData - key is max-height media query,
+ * value is expected return value on that media query.
+ * @param  {Number} defaultValue
+ * @return {Number}
+ */
+export function bestMatchQuery(breakPointData, defaultValue) {
+    if (Object.keys(breakPointData).length === 0 ) {
+        return defaultValue;
+    }
+
+    let sortedBreakPoints = sortObjectByKeys(breakPointData)
+    let sortedBreakPointsArr = Object.entries(sortedBreakPoints);
+
+    for(let index in sortedBreakPointsArr) {
+        let [breakPoint, value] = sortedBreakPointsArr[index]
+        if (window.matchMedia(`(max-height: ${breakPoint}px)`).matches) {
+            return value;
+        }
+    }
+
+    return defaultValue
+}
+
+/**
+ * Sorts given object by its keys.
+ * @param  {Object} unordered
+ * @return {Object}
+ */
+export function sortObjectByKeys(unordered) {
+    return Object.keys(unordered).sort().reduce(
+      (obj, key) => {
+        obj[key] = unordered[key];
+        return obj;
+      },
+      {}
+    );
+}
+
+export function minObjectValueOfKey(objectKey, object) {
+    return object.reduce(function (prev, curr) {
+        return prev[objectKey] < curr[objectKey] ? prev : curr;
+    })[objectKey];
+}
+
+export function maxObjectValueOfKey(objectKey, object) {
+    return object.reduce(function (prev, curr) {
+        return prev[objectKey] > curr[objectKey] ? prev : curr;
+    })[objectKey];
+}
+
+export function cloneObject(object) {
+    return JSON.parse(JSON.stringify(object));
 }

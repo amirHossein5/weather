@@ -1,18 +1,45 @@
 :root {
-    --theme-bg: theme('colors.white'); /* dark: #202124 */
-    --hidden-color: var(--theme-bg); /* same with background to make element hidden */
-    --weather-bg-color: theme('colors.yellow.300');
-    --weather-smooth-bg-color: theme('colors.yellow.100');
-
-    --active-badge-bg-color: var(--weather-bg-color);
-    --active-badge-bg-smooth-color: var(--weather-smooth-bg-color);
-
-    --chart-color: rgba(255, 204, 0, 0.2);
-    --chart-border-top-color: #fc0;
+    --theme-bg: theme('colors.gray.50');
+    --elements-bg: white;
 
     --text-color: theme('colors.gray.700');
-    --light-text-color: theme('colors.gray.500');
     --disabled-text-color: theme('colors.gray.400');
 
-    --active-border-color: theme('colors.yellow.400');
+    /*  hourly chart  */
+    --chart-bg-color: #FBF1AD;
+    --chart-stroke-color: #F7D93D;
+    --chart-text-color: #AE7B03;
+    --chart-section-bg-color: white;
+
+    /*  daily chart  */
+    --hottest-degree-text-color: #E5A50B;
+    --coldest-degree-text-color: #2265B7;
+
+    --input-bg: theme('colors.white');
+    --border-color: theme('colors.gray.200');
+
+    --hover-color: theme('colors.gray.200');
+}
+
+:root body.dark {
+    --theme-bg: #242424; /* dark: #202124 */
+    --elements-bg: #353535;
+
+    --text-color: theme('colors.gray.100');
+    --disabled-text-color: theme('colors.gray.400');
+
+    /*  hourly chart  */
+    --chart-bg-color: #5E542B;
+    --chart-stroke-color: #fc0;
+    --chart-text-color: var(--chart-stroke-color);
+    --chart-section-bg-color: #353535;
+
+    /*  daily chart  */
+    --hottest-degree-text-color: #E5A50B;
+    --coldest-degree-text-color: #2265B7;
+
+    --input-bg: theme('colors.gray.600');
+    --border-color: theme('colors.gray.400');
+
+    --hover-color: theme('colors.gray.600');
 }

@@ -8,135 +8,160 @@
         <link rel="stylesheet" type="text/css" href="vendor/css/app.css" />
     </head>
 
-    <style></style>
+    <body class="text-[var(--text-color)] bg-[var(--theme-bg)]">
 
-    <body class="text-[var(--text-color)] overflow-y-hidden">
-        <header class="pt-7 pb-1 bg-[var(--weather-smooth-bg-color)] blurred">
-            <section class="container mx-auto">
-                <section
-                    class="flex xs:flex-row flex-col md:items-end xs:items-start items-center justify-between xs:gap-2 gap-4"
-                >
-                    <div class="flex gap-0 flex-row items-start">
+        <header class="pt-5 hidden relative">
+            <section class="container pb-2 border-b mx-auto">
+                <section class="">
+                    <div class="flex flex-row items-end gap-2">
+                        <div class="" id="icons">
+                            <img class="w-20" data-current-weather-icon />
+                        </div>
                         <div class="">
-                            <img class="w-20" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" />
-                        </div>
-                        <span class="text-7xl self-end">13</span>
-                        <div
-                            class="text-lg flex items-center gap-1"
-                            x-data="{ cIsActive: true, activeClass: 'badge-active', unActiveClass: 'text-[var(--disabled-text-color)]' }"
-                        >
-                            <span
-                                class="pb-0 font-bold cursor-pointer p-1 rounded"
-                                x-bind:class="{ [unActiveClass]: !cIsActive, [activeClass]: cIsActive }"
-                                x-on:click="cIsActive=true"
-                                >&deg;C</span
-                            >
-                            <div class="border-r h-5"></div>
-                            <span
-                                class="pb-0 font-bold cursor-pointer p-1 rounded"
-                                x-bind:class="{ [unActiveClass]: cIsActive, [activeClass]: !cIsActive }"
-                                x-on:click="cIsActive=false"
-                                >&deg;F</span
+                            <div class="text-sm font-semibold flex gap-1 items-center">
+                                <span x-data x-text="`${localStorage.city}, ${localStorage.province}`"></span>
+                                <span
+                                    x-data
+                                    x-on:click="localStorage.clear(); location.reload()"
+                                    class="cursor-pointer p-1 hover:bg-[var(--hover-color)] transition rounded"
+                                >
+                                    <!-- prettier-ignore -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 22" style="fill: var(--text-color);transform: ;msFilter:;">
+                                        <path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
+                            <span class="font-medium text-sm"
+                                >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
                             >
                         </div>
                     </div>
-                    <div class="flex flex-col xs:items-start items-center">
-                        <p class="md:text-xl xs:text-lg text-xl font-medium">Sunday</p>
-                        <p class="md:p-2 xs:p-1 p-2 rounded leading-4 font-medium bg-[var(--weather-bg-color)]">
-                            Mostly sunny
-                        </p>
-                    </div>
-                </section>
-
-                <section
-                    class="xs:mt-4 mt-10 flex xs:justify-start justify-center gap-2"
-                    x-data="{ activeTab: 'temp', activeClass: 'border-b border-b-[var(--active-border-color)] border-b-4'}"
-                >
-                    <div
-                        class="font-medium cursor-pointer px-2"
-                        x-bind:class="{ [activeClass]: activeTab === 'temp' }"
-                        x-on:click="activeTab='temp'"
-                    >
-                        Temperature
-                    </div>
-                    <div class="border-r last:border-r-0 h-5"></div>
-
-                    <div
-                        class="font-medium cursor-pointer px-2"
-                        x-bind:class="{ [activeClass]: activeTab === 'precip' }"
-                        x-on:click="activeTab='precip'"
-                    >
-                        Precipitation
-                    </div>
-                    <div class="border-r last:border-r-0 h-5"></div>
-
-                    <div
-                        class="font-medium cursor-pointer px-2"
-                        x-bind:class="{ [activeClass]: activeTab === 'wind' }"
-                        x-on:click="activeTab='wind'"
-                    >
-                        Wind
-                    </div>
-                    <div class="border-r last:border-r-0 h-5"></div>
                 </section>
             </section>
         </header>
 
-        <main>
-            <section class="container mx-auto blurred">
-                <section id="weather-chart" class="2xl:px-10"></section>
+        <main class="pb-20">
+            <section class="container mx-auto hidden">
+                <!-- recent later hours -->
+                <div class="flex mt-4 overflow-auto hourly-slider splide border cursor-grab pb-0 rounded-md">
+                    <div class="splide__track">
+                        <div class="splide__list" id="recent-later-hours">
+                            <template>
+                                <div
+                                    class="flex flex-col splide__slide last:border-r-0 border-r bg-[var(--chart-section-bg-color)] pt-4"
+                                >
+                                    <div class="flex flex-col items-center pb-2 gap-y-1">
+                                        <p class="text-sm font-semibold" data-hourly-datetime></p>
+                                        <img class="w-10" data-hourly-icon />
+                                    </div>
+                                    <div data-hourly-area-chart></div>
+                                    <div
+                                        class="font-extrabold text-center text-sm text-[var(--chart-text-color)] bg-[var(--chart-bg-color)] p-3"
+                                    >
+                                        <span data-hourly-temperature></span>&deg;
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
 
-                <section
-                    id="days"
-                    class="flex flex-wrap justify-center gap-1"
-                    x-data="{
-                        activeDay: 0,
-                        activeClass: 'badge-active-smooth border-2 border-[var(--active-border-color)]',
-                        unActiveClass: 'border-2 border-[var(--hidden-color)]'
-                    }"
-                >
-                    <template x-for="(day, index) in [1,1,1,1,1,1,1]">
-                        <div
-                            class="rounded-2xl p-1 px-3 badge-smooth flex-col cursor-pointer"
-                            x-bind:class="{ [activeClass]: activeDay === index, [unActiveClass]: activeDay !== index }"
-                            x-on:click="activeDay=index"
+                <!-- daily summary -->
+                <div class="mt-10">
+                    <div class="flex justify-center">
+                        <h1
+                            class="relative after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:w-full after:block after:h-1 after:bg-blue-400 text-xl py-1 px-4"
                         >
-                            <h6 class="font-medium">Sunday</h6>
-                            <img class="w-16" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" />
-                            <div>
-                                <span class="text-sm font-semibold"> <span>13</span>&deg; </span>
-                                <span class="text-sm font-semibold text-[var(--disabled-text-color)]">
-                                    <span>3</span>&deg;
-                                </span>
+                            Daily
+                        </h1>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <div class="mt-4 overflow-auto daily-summary-slider splide border cursor-pointer rounded-md">
+                            <div class="splide__track">
+                                <div class="splide__list" id="daily-summary">
+                                    <template>
+                                        <div
+                                            class="splide__slide flex flex-col items-center lg:w-28 md:w-24 w-20 pt-6 pb-3 last:border-r-0 border-r bg-[var(--chart-section-bg-color)]"
+                                        >
+                                            <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
+                                            <p data-daily-summary-date class="text-xs">Mar 9</p>
+                                            <img data-daily-summary-icon class="w-10 mt-2" />
+
+                                            <div data-daily-summary-line-chart class="mt-3 grow"></div>
+                                        </div>
+                                    </template>
+                                </div>
                             </div>
                         </div>
-                    </template>
-                </section>
+                    </div>
 
-                <section
-                    class="mt-40 border-t py-3 flex flex-wrap gap-x-6 gap-y-2 justify-center items-baseline lg:font-medium lg:text-base font-semibold text-sm leading-5"
-                >
-                    <div>
-                        <span class="text-[var(--light-text-color)]">Precipitation:</span>
-                        <span>0%</span>
+                    <div id="hours-of-day" class="mt-20">
+
+                        <template>
+                            <div class="mb-8 flex flex-col items-center">
+                                <h1
+                                    class="relative after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:w-full after:block after:h-1 after:bg-blue-400 text-xl py-1"
+                                    data-day-hours-date
+                                >
+
+                                </h1>
+                                <div class="mt-6 overflow-auto w-full day-hours-slider splide border cursor-grab pb-0 rounded-md">
+                                    <div class="splide__track">
+                                        <div class="splide__list day-hours">
+                                            <template>
+                                                <div
+                                                    class="flex flex-col splide__slide last:border-r-0 border-r bg-[var(--chart-section-bg-color)] pt-4"
+                                                >
+                                                    <div class="flex flex-col items-center pb-2 gap-y-1">
+                                                        <p class="text-sm font-semibold" data-hourly-datetime></p>
+                                                        <img class="w-10" data-hourly-icon />
+                                                    </div>
+                                                    <div data-hourly-area-chart></div>
+                                                    <div
+                                                        class="font-extrabold text-center text-sm text-[var(--chart-text-color)] bg-[var(--chart-bg-color)] p-3"
+                                                    >
+                                                        <span data-hourly-temperature></span>&deg;
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
                     </div>
-                    <div>
-                        <span class="text-[var(--light-text-color)]">Humidity:</span>
-                        <span>41%</span>
-                    </div>
-                    <div>
-                        <span class="text-[var(--light-text-color)]">Wind:</span>
-                        <span>11 km/h</span>
-                    </div>
-                </section>
+
+                </div>
             </section>
         </main>
+
+        <footer class="mt-16 border-t py-2 container mx-auto flex justify-center gap-4 items-center flex-wrap hidden">
+            <a href="https://github.com/amirhossein5/weather" class="hover:bg-[var(--elements-bg)] rounded-xl p-2">
+                <img src="github-icon.svg" class="w-8">
+            </a>
+            <section id="theme-toggler" class="hidden p-2" x-data>
+                <div class="cursor-pointer light" x-on:click="toggleTheme()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7">
+                        <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" class="stroke-slate-400 dark:stroke-slate-500"></path>
+                        <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836" class="stroke-slate-400 dark:stroke-slate-500"></path>
+                    </svg>
+                </div>
+                <div class="cursor-pointer dark" x-on:click="toggleTheme()">
+                    <svg viewBox="0 0 24 24" fill="none" class="w-7 h-7">
+                        <path d="m17.715 15.15.95.316a1 1 0 0 0-1.445-1.185l.495.869ZM9 6.035l.846.534a1 1 0 0 0-1.14-1.49L9 6.035Zm8.221 8.246a5.47 5.47 0 0 1-2.72.718v2a7.47 7.47 0 0 0 3.71-.98l-.99-1.738Zm-2.72.718A5.5 5.5 0 0 1 9 9.5H7a7.5 7.5 0 0 0 7.5 7.5v-2ZM9 9.5c0-1.079.31-2.082.845-2.93L8.153 5.5A7.47 7.47 0 0 0 7 9.5h2Zm-4 3.368C5 10.089 6.815 7.75 9.292 6.99L8.706 5.08C5.397 6.094 3 9.201 3 12.867h2Zm6.042 6.136C7.718 19.003 5 16.268 5 12.867H3c0 4.48 3.588 8.136 8.042 8.136v-2Zm5.725-4.17c-.81 2.433-3.074 4.17-5.725 4.17v2c3.552 0 6.553-2.327 7.622-5.537l-1.897-.632Z" class="fill-slate-400 dark:fill-slate-500"></path>
+                    </svg>
+                </div>
+            </section>
+        </footer>
 
         <section class="absolute md:top-10 sm:top-5 top-0 right-0 left-0 bottom-0 hidden">
             <section class="flex xs:h-auto h-full justify-center">
                 <form
                     id="locationForm"
-                    class="bg-[var(--theme-bg)] pt-6 pb-4 px-1 xs:w-auto w-full border rounded sm:rounded-t rounded-t-none"
+                    class="bg-[var(--elements-bg)] pt-6 pb-4 px-1 xs:w-auto w-full border rounded sm:rounded-t rounded-t-none"
                     x-data="locationForm"
                 >
                     <div class="px-3 flex gap-2 xs:justify-center xs:items-start items-center xs:flex-row flex-col">
@@ -146,6 +171,7 @@
                             class="outline-none border rounded p-2 xs:w-auto w-full"
                             x-on:input.debounce.800="updateCities()"
                             x-on:keydown.window.prevent.slash="$el.focus()"
+                            x-on:keydown.enter.prevent
                             x-model="keyword"
                         />
 
@@ -158,8 +184,8 @@
                         >
                             <!-- prettier-ignore -->
                             <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke=""></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" style="--darkreader-inline-fill: currentColor;" data-darkreader-inline-fill=""></path>
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
 
                             search for city
@@ -168,20 +194,23 @@
 
                     <div x-show="cities.length !== 0" class="mt-5"></div>
 
-                    <div class="max-h-[calc(100vh-13rem)] overflow-y-auto text-[var(--font-color)] px-1">
+                    <div class="max-h-[calc(100vh-13rem)] overflow-y-auto px-1">
                         <template x-for="(city, index) in cities">
                             <button
                                 type="button"
                                 x-on:click="selectedCityIndex=index"
                                 x-bind:class="{ 'bg-green-700 text-white': selectedCityIndex === index }"
-                                class="focus:outline-none focus:border-blue-200 border border-[var(--hidden-color)] rounded px-1 py-2 w-full cursor-pointer flex items-center gap-2 sm:gap-3 border-b"
+                                class="focus:outline-none focus:border-blue-200 border border-[var(--theme-bg)] rounded px-1 py-2 w-full cursor-pointer flex items-center gap-2 sm:gap-3 border-b"
                             >
                                 <div>
                                     <img x-bind:src="city.countryIconUrl" class="sm:w-8 w-6 rounded" />
                                 </div>
-                                <div>
+                                <div class="flex">
                                     <span x-text="city.name"></span>
-                                    <span x-show="city.province !== '' && city.province !== undefined" x-text="', '+city.province"></span>
+                                    <span
+                                        x-show="city.province !== '' && city.province !== undefined"
+                                        x-text="', '+city.province"
+                                    ></span>
                                 </div>
                             </button>
                         </template>
@@ -196,8 +225,8 @@
                         >
                             <!-- prettier-ignore -->
                             <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" style="--darkreader-inline-stroke: currentColor;" data-darkreader-inline-stroke=""></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" style="--darkreader-inline-fill: currentColor;" data-darkreader-inline-fill=""></path>
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
 
                             Get weather
@@ -207,6 +236,7 @@
             </section>
         </section>
 
+        <script src="js/theme.js"></script>
         <script type="module" src="vendor/js/app.js"></script>
         <script>
             function locationForm() {
@@ -219,18 +249,20 @@
                         this.selectedCityIndex = undefined;
                         this.loading = true;
 
-                        getCities(this.keyword).then((cities) => {
-                            this.cities = cities;
-                            this.loading = false;
-                        }).catch((err) => {
-                            alerts().swal().mixin('error', 'failed to get cities..')
-                            this.loading = false;
-                        });
+                        getCities(this.keyword)
+                            .then((cities) => {
+                                this.cities = cities;
+                                this.loading = false;
+                            })
+                            .catch((err) => {
+                                alerts().swal().mixin('error', 'failed to get cities..');
+                                this.loading = false;
+                            });
                     },
                     setLocalStorageData() {
                         if (!(this.selectedCityIndex in this.cities)) {
-                            alerts().swal().mixin('error', 'select your city')
-                            return
+                            alerts().swal().mixin('error', 'select your city');
+                            return;
                         }
 
                         this.loading = true;
@@ -245,8 +277,8 @@
                         });
 
                         location.reload();
-                    }
-                }
+                    },
+                };
             }
         </script>
     </body>
