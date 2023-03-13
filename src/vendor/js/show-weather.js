@@ -76,8 +76,8 @@ export default function showWeather() {
             alerts().swal().mixin('error', 'Failed to get weather');
 
             setTimeout(function () {
-                localStorage.clear()
-                location.reload()
+                localStorage.clear();
+                location.reload();
             }, 5000);
         });
 }
@@ -97,6 +97,12 @@ function fillWeatherData(weather) {
         areaChartOptions: areaChartOptions,
     });
     fillDailySummaryWeather(weather.daily);
+}
+
+function fillCurrentWeather({ datetime, temperature, apparentTemperature, icon }) {
+    setElementsData('current-weather-icon', (el) => addIconTo(el, icon));
+    setElementsData('current-weather-temp', (el) => (el.innerHTML = temperature));
+    setElementsData('current-weather-apparent-temp', (el) => (el.innerHTML = apparentTemperature));
 }
 
 function fillHoursData({ hours, onSelector, splideSelector, areaChartOptions }) {
@@ -158,7 +164,7 @@ function fillDailyHoursData(days) {
     let newAreaChartOptions = cloneObject(areaChartOptions);
     newAreaChartOptions.height = 130;
     newAreaChartOptions.responsiveHeight = {
-        360: 100
+        360: 100,
     };
 
     days.forEach((day) => {
@@ -179,12 +185,6 @@ function fillDailyHoursData(days) {
     document.querySelectorAll('.day-hours-slider').forEach((slider) => {
         new Splide(slider, splideOptions).mount();
     });
-}
-
-function fillCurrentWeather({ datetime, temperature, apparentTemperature, icon }) {
-    setElementsData('current-weather-icon', (el) => addIconTo(el, icon));
-    setElementsData('current-weather-temp', (el) => (el.innerHTML = temperature));
-    setElementsData('current-weather-apparent-temp', (el) => (el.innerHTML = apparentTemperature));
 }
 
 function addStaticIconTo(el, icon) {

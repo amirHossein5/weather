@@ -24,8 +24,6 @@ export default class Chart {
     }
 
     /**
-     * Returns section of line chart.
-     *
      * Skeleton:
      * <div>               // container
      *     <p></p>         // lowText
@@ -74,7 +72,6 @@ export default class Chart {
     }
 
     /**
-     * Returns line chart background size.
      * @return {String}
      */
     getLineChartBgSize() {
@@ -82,7 +79,6 @@ export default class Chart {
     }
 
     /**
-     * Returns line chart backgroud position.
      * @param  {Number} chartSpaceFromTop
      * @return {String}
      */
@@ -91,22 +87,16 @@ export default class Chart {
     }
 
     /**
-     * Height of line bar based on low-lowest and high-highest values in pixels.
-     * pattern: (high-low) * (maxheight / (biggest_entry - fewest_entry))
-     *
      * @param  {Number} low
      * @param  {Number} high
      * @return {Number}
      */
     getLineChartHeight(low, high) {
-        if (high === low) return `2`
+        if (high === low) return '2'
         return (high-low) * (this.lineMaxHeight / (this.biggest_entry - this.fewest_entry));
     }
 
     /**
-     * Space from top of line bar based on low-lowest and high-highest values in pixels.
-     * pattern: (biggest_entry - high) * (maxheight / (biggest_entry - fewest_entry))
-     *
      * @param  {Number} high number
      * @return {Number}
      */

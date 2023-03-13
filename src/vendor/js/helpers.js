@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 /**
- * Sets multiple attributes of element.
  * @param {HtmlNode} el
  * @param {[][String attribute, value]} attributes
  */
@@ -10,7 +9,7 @@ export function setAttributes(el, attributes) {
 }
 
 /**
- * Setting weather data in local storage
+ * Sets weather data in local storage
  * @param {String} lat
  * @param {String} long
  * @param {String} timezone
@@ -31,10 +30,10 @@ export function setLocalStorageData({ lat, long, timezone, city, province }) {
  */
 export function hasRequiredData() {
     const notBlankValueKeys = ['lat', 'long', 'timezone', 'city', 'province'];
-    const requiredKeys = []; // value of the key may be blank
+    const requiredKeysButMayBlankValue = [];
 
-    for (let index in requiredKeys) {
-        let key = requiredKeys[index];
+    for (let index in requiredKeysButMayBlankValue) {
+        let key = requiredKeysButMayBlankValue[index];
 
         if (!(key in localStorage)) {
             return false;
@@ -57,7 +56,6 @@ export function hasRequiredData() {
 }
 
 /**
- * Gives every element for given data attribute name(s) to closure.
  * @param {String} dataName
  * @param {closure} closure
  * @param {closure} selector
@@ -69,7 +67,7 @@ export function setElementsData(dataName, closure, selector = document) {
 }
 
 /**
- * Returns appropriate value based on current media query breakpoints
+ * Returns appropriate value based on current media query breakpoints.
  * @param  {Object} breakPointData - key is max-height media query,
  * value is expected return value on that media query.
  * @param  {Number} defaultValue
@@ -94,7 +92,6 @@ export function bestMatchQuery(breakPointData, defaultValue) {
 }
 
 /**
- * Sorts given object by its keys.
  * @param  {Object} unordered
  * @return {Object}
  */

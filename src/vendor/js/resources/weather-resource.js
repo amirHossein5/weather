@@ -17,7 +17,6 @@ export default function weatherResource(data) {
 }
 
 /**
- * Current hour weather data.
  * @param  {Object} data
  * @return {Object}
  */
@@ -47,7 +46,6 @@ function getHourlyWeather(data, ...sliceHours) {
 }
 
 /**
- * Daily weather data including hourly data of the day.
  * @param  {Object} data
  * @return {Object}
  */
@@ -56,7 +54,7 @@ function getDailyWeather(data) {
 
     data.daily.time.forEach((timestamp, index) => {
         dailyArr.push({
-            day: dayjs.tz(timestamp * 1000), // for peeking week days
+            day: dayjs.tz(timestamp * 1000),
             temperature_min: roundTemp(data.daily.temperature_2m_min[index]),
             temperature_max: roundTemp(data.daily.temperature_2m_max[index]),
             icon: weatherIcon.iconOf(data.daily.weathercode[index]),
@@ -68,7 +66,7 @@ function getDailyWeather(data) {
 }
 
 /**
- * Removes past hours,temps,weathercodes from data.hourly
+ * @param  {Object} data
  * @return {Object}
  */
 function removePastHours(data) {
@@ -86,7 +84,6 @@ function removePastHours(data) {
 }
 
 /**
- * Returns index of hourlyData time array, which is on current hour.
  * @param  {Object} hourlyData
  * @return {Number}
  */

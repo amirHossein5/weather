@@ -13,7 +13,7 @@ export default class Chart {
             height,
             width,
             padding_bottom = 0, // padding between lowest value and bottom of the chart
-            border_width = 4, // top chart border
+            top_stroke_width = 4, // top chart svg stroke
             chartBgColor,
             strokeColor,
             textColor,
@@ -26,7 +26,7 @@ export default class Chart {
         this.height = height;
         this.width = width;
         this.padding_bottom = padding_bottom;
-        this.border_width = border_width;
+        this.top_stroke_width = top_stroke_width;
         this.biggest_entry = biggest_entry;
         this.fewest_entry = fewest_entry;
         this.chartBgColor = chartBgColor;
@@ -36,7 +36,6 @@ export default class Chart {
     }
 
     /**
-     * Returns svg based on given points
      * @param {Number} previous entry
      * @param {Number} current entry
      * @param {Number} next entry
@@ -49,7 +48,7 @@ export default class Chart {
         let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         let topChartPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        let drawAttribute = this.getDrawAttribute(previous, current, next);
+        let drawAttribute = this.get_d_attribute_value(previous, current, next);
 
         path.classList.add(...this.chartPathClasses)
         topChartPath.classList.add(...this.topChartPathClasses)
@@ -64,7 +63,7 @@ export default class Chart {
         setAttributes(topChartPath, [
             ['d', drawAttribute],
             ['fill', 'none'],
-            ['stroke-width', this.border_width],
+            ['stroke-width', this.top_stroke_width],
         ]);
 
         svg.append(topChartPath);
@@ -74,13 +73,12 @@ export default class Chart {
     }
 
     /**
-     * Returns value of `d` attribute of path tag.
      * @param {Number} previousEntry entry
      * @param {Number} currentEntry entry
      * @param {Number} nextEntry entry
      * @return {String}
      */
-    getDrawAttribute(previousEntry, currentEntry, nextEntry) {
+    get_d_attribute_value(previousEntry, currentEntry, nextEntry) {
         let previousX = this.getEntryPositionX(PREVIOUS_INDEX, previousEntry);
         let previousY = this.getEntryPositionY(previousEntry);
 
@@ -98,7 +96,6 @@ export default class Chart {
     }
 
     /**
-     * Closes the path draw with `z` and completes the shape.
      * @param  {String} draw
      * @return {String}
      */
@@ -108,23 +105,18 @@ export default class Chart {
     }
 
     /**
-     * Calculate entry position Y.
-     * pattern: (biggest_entry - entry) * (height / (biggest_entry - fewest_entry))
-     * also add border_width
-     *
      * @param  {[Number]} entry
      * @return {[Number]}
      */
     getEntryPositionY(entry) {
-        let appropriateHeight = this.height - this.padding_bottom - this.border_width * 2; // decreasing height(space from bottom)
+        let appropriateHeight = this.height - this.padding_bottom - this.top_stroke_width * 2; // decreasing height(space from bottom)
         return (
-            this.border_width + // add space from top
+            this.top_stroke_width + // add space from top
             (this.biggest_entry - entry) * (appropriateHeight / (this.biggest_entry - this.fewest_entry))
         );
     }
 
     /**
-     * Returns entry's x position.
      * @param  {Number} entry
      * @return {Number}
      */
@@ -133,7 +125,6 @@ export default class Chart {
     }
 
     /**
-     * Returns hour distance based on width of chart
      * @return {Number}
      */
     getHourDistance() {
@@ -141,10 +132,10 @@ export default class Chart {
     }
 
     /**
-     * Returns real previous position, to start of chart can be connected to end of previous chart.
      * @param  {Number} current
      * @param  {Number} previous
      * @return {Number}
+     * Returns real previous position, for start of chart can be connected to end of previous chart.
      */
     getRealPrevious(current, previous) {
         if (previous === current) return current;
@@ -159,10 +150,10 @@ export default class Chart {
     }
 
     /**
-     * Returns real next position, to end of chart can be connected to start of next chart.
      * @param  {Number} current
      * @param  {Number} previous
      * @return {Number}
+     * Returns real next position, for end of chart can be connected to start of next chart.
      */
     getRealNext(current, next) {
         if (next === current) return current;
