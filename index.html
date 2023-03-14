@@ -7,8 +7,8 @@
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
 
         
-      <script type="module" crossorigin src="/weather/assets/main-d248071a.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-36235f15.css">
+      <script type="module" crossorigin src="/weather/assets/main-0a1379bb.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-d122d645.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -50,6 +50,85 @@
         </header>
 
         <main class="pb-20">
+            <section class="hidden pt-0 sm:pt-5 md:pt-10">
+                <section class="flex h-full justify-center xs:h-auto">
+                    <form
+                        id="locationForm"
+                        class="w-full rounded rounded-t-none border bg-[var(--elements-bg)] px-1 pt-8 pb-4 xs:w-auto sm:rounded-t sm:pt-6"
+                        x-data="locationForm"
+                    >
+                        <div class="flex flex-col items-center gap-2 px-3 xs:flex-row xs:items-start xs:justify-center">
+                            <input
+                                type="text"
+                                id="cityInput"
+                                class="w-full rounded border p-2 outline-none xs:w-auto"
+                                x-on:input.debounce.800="updateCities()"
+                                x-on:keydown.window.prevent.slash="$el.focus()"
+                                x-on:keydown.enter.prevent
+                                x-model="keyword"
+                            />
+
+                            <button
+                                class="w-full rounded bg-green-800 p-2 text-white"
+                                x-bind:disabled="loading"
+                                x-bind:class="{ 'bg-green-900': loading }"
+                                type="button"
+                                x-on:click="updateCities()"
+                            >
+                                <!-- prettier-ignore -->
+                                <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+
+                                search for city
+                            </button>
+                        </div>
+
+                        <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
+
+                        <div class="max-h-[calc(100vh-10rem)] overflow-y-auto px-1">
+                            <template x-for="(city, index) in cities">
+                                <button
+                                    type="button"
+                                    x-on:click="selectedCityIndex=index"
+                                    x-bind:class="{ 'bg-green-900 text-white': selectedCityIndex === index }"
+                                    class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-2 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
+                                >
+                                    <div class="flex-shrink-0">
+                                        <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
+                                    </div>
+                                    <div class="flex flex-wrap">
+                                        <span x-text="city.name"></span>
+                                        <span
+                                            x-show="city.province !== '' && city.province !== undefined"
+                                            x-text="', '+city.province"
+                                        ></span>
+                                    </div>
+                                </button>
+                            </template>
+                        </div>
+
+                        <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
+                            <button
+                                class="mt-6 w-full rounded bg-green-800 p-2 text-white"
+                                x-bind:disabled="loading"
+                                x-bind:class="{ 'bg-green-900': loading }"
+                                x-on:click.prevent="setLocalStorageData()"
+                            >
+                                <!-- prettier-ignore -->
+                                <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+
+                                Get weather
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </section>
+
             <section class="container mx-auto hidden">
                 <!-- recent later hours -->
                 <div class="hourly-slider splide mt-4 flex cursor-grab overflow-auto rounded-md border pb-0">
@@ -183,85 +262,6 @@
                 </div>
             </section>
         </footer>
-
-        <section class="absolute top-0 right-0 left-0 bottom-0 hidden sm:top-5 md:top-10">
-            <section class="flex h-full justify-center xs:h-auto">
-                <form
-                    id="locationForm"
-                    class="w-full rounded rounded-t-none border bg-[var(--elements-bg)] px-1 sm:pt-6 pt-8 pb-4 xs:w-auto sm:rounded-t"
-                    x-data="locationForm"
-                >
-                    <div class="flex flex-col items-center gap-2 px-3 xs:flex-row xs:items-start xs:justify-center">
-                        <input
-                            type="text"
-                            id="cityInput"
-                            class="w-full rounded border p-2 outline-none xs:w-auto"
-                            x-on:input.debounce.800="updateCities()"
-                            x-on:keydown.window.prevent.slash="$el.focus()"
-                            x-on:keydown.enter.prevent
-                            x-model="keyword"
-                        />
-
-                        <button
-                            class="w-full rounded bg-green-800 p-2 text-white"
-                            x-bind:disabled="loading"
-                            x-bind:class="{ 'bg-green-900': loading }"
-                            type="button"
-                            x-on:click="updateCities()"
-                        >
-                            <!-- prettier-ignore -->
-                            <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-
-                            search for city
-                        </button>
-                    </div>
-
-                    <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
-
-                    <div class="max-h-[calc(100vh-13.5rem)] overflow-y-auto px-1">
-                        <template x-for="(city, index) in cities">
-                            <button
-                                type="button"
-                                x-on:click="selectedCityIndex=index"
-                                x-bind:class="{ 'bg-green-900 text-white': selectedCityIndex === index }"
-                                class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-2 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
-                            >
-                                <div class="flex-shrink-0">
-                                    <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
-                                </div>
-                                <div class="flex flex-wrap">
-                                    <span x-text="city.name"></span>
-                                    <span
-                                        x-show="city.province !== '' && city.province !== undefined"
-                                        x-text="', '+city.province"
-                                    ></span>
-                                </div>
-                            </button>
-                        </template>
-                    </div>
-
-                    <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
-                        <button
-                            class="mt-6 w-full rounded bg-green-800 p-2 text-white"
-                            x-bind:disabled="loading"
-                            x-bind:class="{ 'bg-green-900': loading }"
-                            x-on:click.prevent="setLocalStorageData()"
-                        >
-                            <!-- prettier-ignore -->
-                            <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-
-                            Get weather
-                        </button>
-                    </div>
-                </form>
-            </section>
-        </section>
 
         <script src="js/theme.js"></script>
         
