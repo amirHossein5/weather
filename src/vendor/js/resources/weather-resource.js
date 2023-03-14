@@ -11,7 +11,7 @@ dayjs.tz.setDefault(localStorage.timezone);
 export default function weatherResource(data) {
     return {
         current: getCurrentWeather(removePastHours(data)),
-        recentLaterHours: getHourlyWeather(removePastHours(data), 0, 24),
+        recentLaterHours: getHourlyWeather(removePastHours(data), 0, 25),
         daily: getDailyWeather(data),
     };
 }
