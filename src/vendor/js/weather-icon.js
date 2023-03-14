@@ -1,120 +1,67 @@
+import { thereIsSun } from '@vendor/js/sun';
+
 const ICON_MAP = new Map();
 const BASE = 'icons/weather';
 
-// static icons: icons without animations
-
-addIconMapping([0, 1], { path: `${BASE}/sun.svg`, name: 'sunny', staticIconPath: `${BASE}/static/sun.svg` });
+// sun
+addIconMapping([0, 1], { path: '{sunOrMoon}.svg', name: 'clear sky' });
 // cloud
-addIconMapping([2], {
-    path: `${BASE}/cloud-sun.svg`,
-    name: 'partly cloudy',
-    staticIconPath: `${BASE}/static/cloud-sun.svg`,
-});
-addIconMapping([3], { path: `${BASE}/cloud.svg`, name: 'cloudy', staticIconPath: `${BASE}/static/cloud.svg` });
+addIconMapping([2], { path: 'cloud-{sunOrMoon}.svg', name: 'partly cloudy' });
+addIconMapping([3], { path: 'cloud.svg', name: 'cloudy' });
 // fog or smog
-addIconMapping([45, 48], { path: `${BASE}/smog.svg`, name: 'fog, or smog', staticIconPath: `${BASE}/static/smog.svg` });
+addIconMapping([45, 48], { path: 'smog.svg', name: 'fog, or smog' });
 // drizzle
-addIconMapping([51], {
-    path: `${BASE}/slight-rain.svg`,
-    name: 'slight drizzle',
-    staticIconPath: `${BASE}/static/slight-rain.svg`,
-});
-addIconMapping([53, 55], {
-    path: `${BASE}/moderate-rain.svg`,
-    name: 'drizzle',
-    staticIconPath: `${BASE}/static/moderate-rain.svg`,
-});
+addIconMapping([51], { path: 'slight-rain.svg', name: 'slight drizzle' });
+addIconMapping([53, 55], { path: 'moderate-rain.svg', name: 'drizzle' });
 // freezed drizzle
-addIconMapping([56], {
-    path: `${BASE}/slight-rain.svg`,
-    name: 'slight freezed drizzle',
-    staticIconPath: `${BASE}/static/slight-rain.svg`,
-});
-addIconMapping([57], {
-    path: `${BASE}/moderate-rain.svg`,
-    name: 'freezed drizzle',
-    staticIconPath: `${BASE}/static/moderate-rain.svg`,
-});
+addIconMapping([56], { path: 'slight-rain.svg', name: 'slight freezed drizzle' });
+addIconMapping([57], { path: 'moderate-rain.svg', name: 'freezed drizzle' });
 // rainy
-addIconMapping([61], {
-    path: `${BASE}/slight-rain.svg`,
-    name: 'slight rain',
-    staticIconPath: `${BASE}/static/slight-rain.svg`,
-});
-addIconMapping([63], {
-    path: `${BASE}/moderate-rain.svg`,
-    name: 'moderate rain',
-    staticIconPath: `${BASE}/static/moderate-rain.svg`,
-});
-addIconMapping([65], {
-    path: `${BASE}/heavy-rain.svg`,
-    name: 'heavy rain',
-    staticIconPath: `${BASE}/static/heavy-rain.svg`,
-});
+addIconMapping([61], { path: 'slight-rain.svg', name: 'slight rain' });
+addIconMapping([63], { path: 'moderate-rain.svg', name: 'moderate rain' });
+addIconMapping([65], { path: 'heavy-rain.svg', name: 'heavy rain' });
 // freezing rain
-addIconMapping([66], {
-    path: `${BASE}/slight-rain.svg`,
-    name: 'slight freezed rain',
-    staticIconPath: `${BASE}/static/slight-rain.svg`,
-});
-addIconMapping([67], {
-    path: `${BASE}/heavy-rain.svg`,
-    name: 'heavy freezed rain',
-    staticIconPath: `${BASE}/static/heavy-rain.svg`,
-});
+addIconMapping([66], { path: 'slight-rain.svg', name: 'slight freezed rain' });
+addIconMapping([67], { path: 'heavy-rain.svg', name: 'heavy freezed rain' });
 // snow
-addIconMapping([71], {
-    path: `${BASE}/slight-snow.svg`,
-    name: 'silght snow',
-    staticIconPath: `${BASE}/static/slight-snow.svg`,
-});
-addIconMapping([73], {
-    path: `${BASE}/moderate-snow.svg`,
-    name: 'moderate snow',
-    staticIconPath: `${BASE}/static/moderate-snow.svg`,
-});
-addIconMapping([75, 77], {
-    path: `${BASE}/heavy-snow.svg`,
-    name: 'heavy snow',
-    staticIconPath: `${BASE}/static/heavy-snow.svg`,
-});
+addIconMapping([71], { path: 'slight-snow.svg', name: 'silght snow' });
+addIconMapping([73], { path: 'moderate-snow.svg', name: 'moderate snow' });
+addIconMapping([75, 77], { path: 'heavy-snow.svg', name: 'heavy snow' });
 // rain showers
-addIconMapping([80], {
-    path: `${BASE}/slight-rain-showers.svg`,
-    name: 'slight rain showers',
-    staticIconPath: `${BASE}/static/slight-rain-showers.svg`,
-});
-addIconMapping([81], {
-    path: `${BASE}/moderate-rain-showers.svg`,
-    name: 'moderate rain showers',
-    staticIconPath: `${BASE}/static/moderate-rain-showers.svg`,
-});
-addIconMapping([82], {
-    path: `${BASE}/heavy-rain-showers.svg`,
-    name: 'heavy rain showers',
-    staticIconPath: `${BASE}/static/heavy-rain-showers.svg`,
-});
+addIconMapping([80], { path: 'slight-rain-showers-{sunOrMoon}.svg', name: 'slight rain showers' });
+addIconMapping([81], { path: 'moderate-rain-showers-{sunOrMoon}.svg', name: 'moderate rain showers' });
+addIconMapping([82], { path: 'heavy-rain-showers-{sunOrMoon}.svg', name: 'heavy rain showers' });
 // snow showers
-addIconMapping([85], {
-    path: `${BASE}/slight-snow-showers.svg`,
-    name: 'slight snow showers',
-    staticIconPath: `${BASE}/static/slight-snow-showers.svg`,
-});
-addIconMapping([86], {
-    path: `${BASE}/heavy-snow-showers.svg`,
-    name: 'heavy snow showers',
-    staticIconPath: `${BASE}/static/heavy-snow-showers.svg`,
-});
+addIconMapping([85], { path: 'slight-snow-showers-{sunOrMoon}.svg', name: 'slight snow showers' });
+addIconMapping([86], { path: 'heavy-snow-showers-{sunOrMoon}.svg', name: 'heavy snow showers' });
 // thunderstorm
-addIconMapping([95, 96, 99], {
-    path: `${BASE}/thunderstorm.svg`,
-    name: 'thunderstorm',
-    staticIconPath: `${BASE}/static/thunderstorm.svg`,
-});
+addIconMapping([95, 96, 99], { path: 'thunderstorm.svg', name: 'thunderstorm' });
 
-function addIconMapping(values, iconInfo) {
+function addIconMapping(values, givenIconInfo) {
     values.forEach((val) => {
-        ICON_MAP.set(val, iconInfo);
+        let onDayIconPath = `${BASE}/${givenIconInfo.path.replaceAll('{sunOrMoon}', 'sun')}`;
+        let onNightIconPath = `${BASE}/${givenIconInfo.path.replaceAll('{sunOrMoon}', 'moon')}`;
+        let onDayStaticIconPath = `${BASE}/static/${givenIconInfo.path.replaceAll('{sunOrMoon}', 'sun')}`;
+        let onNightStaticIconPath = `${BASE}/static/${givenIconInfo.path.replaceAll('{sunOrMoon}', 'moon')}`;
+
+        ICON_MAP.set(val, {
+            onDay: {
+                path: onDayIconPath,
+                staticIconPath: onDayStaticIconPath,
+                name: givenIconInfo.name,
+            },
+            onNight: {
+                path: onNightIconPath,
+                staticIconPath: onNightStaticIconPath,
+                name: givenIconInfo.name,
+            },
+            getIconBasedOnDayOrNight: function (onDayjs) {
+                if (thereIsSun({ lat: localStorage.lat, long: localStorage.long, onDayjs })) {
+                    return this.onDay;
+                }
+                return this.onNight;
+            },
+        });
     });
 }
 

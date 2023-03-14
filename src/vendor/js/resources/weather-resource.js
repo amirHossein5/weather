@@ -1,12 +1,6 @@
+import dayjs from '@vendor/js/dayjs';
 import { cloneObject } from '@vendor/js/helpers';
 import * as weatherIcon from '@vendor/js/weather-icon';
-import dayjs from 'dayjs';
-import dayjsTz from 'dayjs/plugin/timezone';
-import dayjsUtc from 'dayjs/plugin/utc';
-
-dayjs.extend(dayjsUtc);
-dayjs.extend(dayjsTz);
-dayjs.tz.setDefault(localStorage.timezone);
 
 export default function weatherResource(data) {
     return {
@@ -25,7 +19,7 @@ function getCurrentWeather(data) {
         datetime: dayjs.tz(data.current_weather.time * 1000),
         temperature: roundTemp(data.current_weather.temperature),
         apparentTemperature: roundTemp(data.hourly.apparent_temperature[0]),
-        icon: weatherIcon.iconOf(data.current_weather.weathercode),
+        icon: weatherIcon.iconOf(data.current_weather.weathercode).getIconBasedOnDayOrNight(dayjs.tz()),
     };
 }
 
@@ -35,10 +29,11 @@ function getHourlyWeather(data, ...sliceHours) {
     let sliceOfHours = sliceWeatherHours(data.hourly, ...sliceHours);
 
     sliceOfHours.time.forEach((timestamp, index) => {
+        let dayjsDate = dayjs.tz(timestamp * 1000);
         hourlyArr.push({
-            datetime: dayjs.tz(timestamp * 1000),
+            datetime: dayjsDate,
             temperature: roundTemp(sliceOfHours.temperature_2m[index]),
-            icon: weatherIcon.iconOf(sliceOfHours.weathercode[index]),
+            icon: weatherIcon.iconOf(sliceOfHours.weathercode[index]).getIconBasedOnDayOrNight(dayjsDate),
         });
     });
 
@@ -57,7 +52,7 @@ function getDailyWeather(data) {
             day: dayjs.tz(timestamp * 1000),
             temperature_min: roundTemp(data.daily.temperature_2m_min[index]),
             temperature_max: roundTemp(data.daily.temperature_2m_max[index]),
-            icon: weatherIcon.iconOf(data.daily.weathercode[index]),
+            icon: weatherIcon.iconOf(data.daily.weathercode[index]).onDay,
             hourly: getHourlyWeather(data, index * 24, index * 24 + 24),
         });
     });
