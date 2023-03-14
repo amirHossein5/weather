@@ -201,7 +201,7 @@
                         />
 
                         <button
-                            class="w-full rounded bg-green-800 px-2 py-1 text-white xs:py-2"
+                            class="w-full rounded bg-green-800 p-2 text-white"
                             x-bind:disabled="loading"
                             x-bind:class="{ 'bg-green-900': loading }"
                             type="button"
@@ -243,7 +243,7 @@
 
                     <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
                         <button
-                            class="mt-6 w-full rounded bg-green-800 p-1 text-white"
+                            class="mt-6 w-full rounded bg-green-800 p-2 text-white"
                             x-bind:disabled="loading"
                             x-bind:class="{ 'bg-green-900': loading }"
                             x-on:click.prevent="setLocalStorageData()"
