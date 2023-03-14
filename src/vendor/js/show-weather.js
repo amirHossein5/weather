@@ -76,7 +76,7 @@ export default function showWeather() {
 }
 
 function showHiddenElements() {
-    let hidedSelectors = ['header.hidden', 'main section.hidden', 'footer.hidden'];
+    let hidedSelectors = ['header.hidden', 'main section.container.hidden', 'footer.hidden'];
 
     hidedSelectors.forEach((selector) => document.querySelector(selector).classList.remove('hidden'));
 }
