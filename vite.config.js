@@ -7,6 +7,7 @@ const OUTDIR = path.resolve(__dirname, 'dist');
 const VENDOR = path.resolve(__dirname, 'src', 'vendor');
 
 export default defineConfig({
+    base: '/weather',
     root: ROOT,
     publicDir: PUBLIC,
     build: {
