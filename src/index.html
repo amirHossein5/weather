@@ -204,7 +204,7 @@
                         </button>
                     </div>
 
-                    <div x-show="cities.length !== 0" class="mt-5"></div>
+                    <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
 
                     <div class="max-h-[calc(100vh-13rem)] overflow-y-auto px-1">
                         <template x-for="(city, index) in cities">
@@ -228,7 +228,7 @@
                         </template>
                     </div>
 
-                    <div class="px-1" x-show="cities.length !== 0">
+                    <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
                         <button
                             class="mt-6 w-full rounded bg-green-800 p-1 text-white"
                             x-bind:disabled="loading"
