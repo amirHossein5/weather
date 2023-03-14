@@ -1,19 +1,12 @@
-import '@splidejs/splide/css';
 import Splide from '@splidejs/splide';
+import '@splidejs/splide/css';
 
-import {
-    cloneObject,
-    setElementsData,
-    setAttributes,
-    minObjectValueOfKey,
-    maxObjectValueOfKey,
-} from '@vendor/js/helpers';
+import alerts from '@vendor/js/alerts/alerts';
 import weatherOf from '@vendor/js/api/weather-api';
 import AreaChart from '@vendor/js/chart/area-chart';
 import LineChart from '@vendor/js/chart/line-chart';
+import { cloneObject, maxObjectValueOfKey, minObjectValueOfKey, setElementsData } from '@vendor/js/helpers';
 import * as pageLoading from '@vendor/js/page-loading';
-import * as weatherIcon from '@vendor/js/weather-icon';
-import alerts from '@vendor/js/alerts/alerts';
 
 let areaChartOptions = {
     responsiveHeight: {

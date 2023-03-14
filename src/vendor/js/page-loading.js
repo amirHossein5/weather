@@ -1,4 +1,4 @@
-import {setAttributes} from '@vendor/js/helpers'
+import { setAttributes } from '@vendor/js/helpers';
 
 export function show(msg = 'is loading...') {
     let loadingEl = document.createElement('div');
@@ -7,14 +7,12 @@ export function show(msg = 'is loading...') {
     setAttributes(loadingEl, [
         ['id', '#pageLoading'],
         ['class', 'fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center text-xl bg-[var(--theme-bg)]'],
-    ])
-    setAttributes(loadingText, [
-        ['class', 'animate-pulse']
-    ])
+    ]);
+    setAttributes(loadingText, [['class', 'animate-pulse']]);
 
     loadingText.innerText = msg;
     loadingEl.append(loadingText);
-    document.querySelector('body').append(loadingEl)
+    document.querySelector('body').append(loadingEl);
 }
 
 export function hide() {

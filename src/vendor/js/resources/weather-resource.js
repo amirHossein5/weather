@@ -1,8 +1,8 @@
+import { cloneObject } from '@vendor/js/helpers';
+import * as weatherIcon from '@vendor/js/weather-icon';
 import dayjs from 'dayjs';
 import dayjsTz from 'dayjs/plugin/timezone';
 import dayjsUtc from 'dayjs/plugin/utc';
-import * as weatherIcon from '@vendor/js/weather-icon'
-import {cloneObject} from '@vendor/js/helpers'
 
 dayjs.extend(dayjsUtc);
 dayjs.extend(dayjsTz);
@@ -32,7 +32,7 @@ function getCurrentWeather(data) {
 function getHourlyWeather(data, ...sliceHours) {
     let hourlyArr = [];
 
-    let sliceOfHours = sliceWeatherHours(data.hourly, ...sliceHours)
+    let sliceOfHours = sliceWeatherHours(data.hourly, ...sliceHours);
 
     sliceOfHours.time.forEach((timestamp, index) => {
         hourlyArr.push({
@@ -107,18 +107,18 @@ function roundTemp(temperature) {
     let rounded = Math.round(temperature);
 
     if (rounded === -0) {
-        rounded = 0
+        rounded = 0;
     }
 
-    return rounded
+    return rounded;
 }
 
 function sliceWeatherHours(weatherHours, ...sliceHours) {
-    let sliceOfHours = cloneObject(weatherHours)
+    let sliceOfHours = cloneObject(weatherHours);
 
     Object.entries(sliceOfHours).forEach(([key, value]) => {
-        sliceOfHours[key] = sliceOfHours[key].slice(...sliceHours)
-    })
+        sliceOfHours[key] = sliceOfHours[key].slice(...sliceHours);
+    });
 
-    return sliceOfHours
+    return sliceOfHours;
 }

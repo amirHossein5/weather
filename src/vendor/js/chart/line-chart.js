@@ -1,16 +1,20 @@
-import {bestMatchQuery} from '@vendor/js/helpers'
+import { bestMatchQuery } from '@vendor/js/helpers';
 
 export default class Chart {
-    constructor(fewest_entry, biggest_entry, {
-        responsiveMaxHeight = {},
-        lineMaxHeight, // just number - it'll be converted to `px`
-        lineWidth, // just number - it'll be converted to `px`
-        containerClasses = [],
-        lineChartClasses = [],
-        lowTextClasses = [],
-        highTextClasses = [],
-    }) {
-        lineMaxHeight = bestMatchQuery(responsiveMaxHeight, lineMaxHeight)
+    constructor(
+        fewest_entry,
+        biggest_entry,
+        {
+            responsiveMaxHeight = {},
+            lineMaxHeight, // just number - it'll be converted to `px`
+            lineWidth, // just number - it'll be converted to `px`
+            containerClasses = [],
+            lineChartClasses = [],
+            lowTextClasses = [],
+            highTextClasses = [],
+        }
+    ) {
+        lineMaxHeight = bestMatchQuery(responsiveMaxHeight, lineMaxHeight);
 
         this.lineMaxHeight = lineMaxHeight;
         this.lineWidth = lineWidth;
@@ -45,12 +49,12 @@ export default class Chart {
         let container = document.createElement('div');
         let spaceFromTop = this.getSpaceFromTop(high); // space from top
         container.classList.add('flex', 'flex-col', 'items-center', ...this.containerClasses);
-        container.style.paddingTop = `${spaceFromTop}px`
+        container.style.paddingTop = `${spaceFromTop}px`;
 
         let lineChart = document.createElement('div');
         let lineChartHeight = this.getLineChartHeight(low, high); // space from bottom
-        lineChart.style.width = `${this.lineWidth}px`
-        lineChart.style.height = `${lineChartHeight}px`
+        lineChart.style.width = `${this.lineWidth}px`;
+        lineChart.style.height = `${lineChartHeight}px`;
         lineChart.style.maxHeight = `${this.lineMaxHeight}px`;
         lineChart.style.backgroundSize = this.getLineChartBgSize();
         lineChart.style.backgroundPosition = this.getLineChartBgPosition(spaceFromTop);
@@ -83,7 +87,7 @@ export default class Chart {
      * @return {String}
      */
     getLineChartBgPosition(chartSpaceFromTop) {
-        return `0px ${this.lineMaxHeight-chartSpaceFromTop}px`
+        return `0px ${this.lineMaxHeight - chartSpaceFromTop}px`;
     }
 
     /**
@@ -92,8 +96,8 @@ export default class Chart {
      * @return {Number}
      */
     getLineChartHeight(low, high) {
-        if (high === low) return '2'
-        return (high-low) * (this.lineMaxHeight / (this.biggest_entry - this.fewest_entry));
+        if (high === low) return '2';
+        return (high - low) * (this.lineMaxHeight / (this.biggest_entry - this.fewest_entry));
     }
 
     /**

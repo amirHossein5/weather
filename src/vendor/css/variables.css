@@ -6,14 +6,14 @@
     --disabled-text-color: theme('colors.gray.400');
 
     /*  hourly chart  */
-    --chart-bg-color: #FBF1AD;
-    --chart-stroke-color: #F7D93D;
-    --chart-text-color: #AE7B03;
+    --chart-bg-color: #fbf1ad;
+    --chart-stroke-color: #f7d93d;
+    --chart-text-color: #ae7b03;
     --chart-section-bg-color: white;
 
     /*  daily chart  */
-    --hottest-degree-text-color: #E5A50B;
-    --coldest-degree-text-color: #2265B7;
+    --hottest-degree-text-color: #e5a50b;
+    --coldest-degree-text-color: #2265b7;
 
     --input-bg: theme('colors.white');
     --border-color: theme('colors.gray.200');
@@ -29,14 +29,14 @@
     --disabled-text-color: theme('colors.gray.400');
 
     /*  hourly chart  */
-    --chart-bg-color: #5E542B;
+    --chart-bg-color: #5e542b;
     --chart-stroke-color: #fc0;
     --chart-text-color: var(--chart-stroke-color);
     --chart-section-bg-color: #353535;
 
     /*  daily chart  */
-    --hottest-degree-text-color: #E5A50B;
-    --coldest-degree-text-color: #2265B7;
+    --hottest-degree-text-color: #e5a50b;
+    --coldest-degree-text-color: #2265b7;
 
     --input-bg: theme('colors.gray.600');
     --border-color: theme('colors.gray.400');

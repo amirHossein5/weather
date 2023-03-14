@@ -1,5 +1,5 @@
+import { citiesResource } from '@vendor/js/resources/city-resource';
 import axios from 'axios';
-import {citiesResource} from '@vendor/js/resources/city-resource'
 
 export default async function getCities(keyword) {
     if (!keyword || keyword === '') {
@@ -19,8 +19,8 @@ export default async function getCities(keyword) {
 
             let cities = data.results.filter((city) => {
                 return 'admin1' in city;
-            })
+            });
 
-            return citiesResource(cities)
+            return citiesResource(cities);
         });
 }

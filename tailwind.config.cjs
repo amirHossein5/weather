@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
     content: ['./src/**/*.{js,ts,jsx,tsx,html}'],
     theme: {
         screens: {
-            'xs': '420px',
+            xs: '420px',
             ...defaultTheme.screens,
         },
         container: {

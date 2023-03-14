@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 /**
  * @param {HtmlNode} el
  * @param {[][String attribute, value]} attributes
@@ -62,8 +60,8 @@ export function hasRequiredData() {
  */
 export function setElementsData(dataName, closure, selector = document) {
     selector.querySelectorAll(`[data-${dataName}]`).forEach((el) => {
-        closure(el)
-    })
+        closure(el);
+    });
 }
 
 /**
@@ -74,21 +72,21 @@ export function setElementsData(dataName, closure, selector = document) {
  * @return {Number}
  */
 export function bestMatchQuery(breakPointData, defaultValue) {
-    if (Object.keys(breakPointData).length === 0 ) {
+    if (Object.keys(breakPointData).length === 0) {
         return defaultValue;
     }
 
-    let sortedBreakPoints = sortObjectByKeys(breakPointData)
+    let sortedBreakPoints = sortObjectByKeys(breakPointData);
     let sortedBreakPointsArr = Object.entries(sortedBreakPoints);
 
-    for(let index in sortedBreakPointsArr) {
-        let [breakPoint, value] = sortedBreakPointsArr[index]
+    for (let index in sortedBreakPointsArr) {
+        let [breakPoint, value] = sortedBreakPointsArr[index];
         if (window.matchMedia(`(max-height: ${breakPoint}px)`).matches) {
             return value;
         }
     }
 
-    return defaultValue
+    return defaultValue;
 }
 
 /**
@@ -96,13 +94,12 @@ export function bestMatchQuery(breakPointData, defaultValue) {
  * @return {Object}
  */
 export function sortObjectByKeys(unordered) {
-    return Object.keys(unordered).sort().reduce(
-      (obj, key) => {
-        obj[key] = unordered[key];
-        return obj;
-      },
-      {}
-    );
+    return Object.keys(unordered)
+        .sort()
+        .reduce((obj, key) => {
+            obj[key] = unordered[key];
+            return obj;
+        }, {});
 }
 
 export function minObjectValueOfKey(objectKey, object) {

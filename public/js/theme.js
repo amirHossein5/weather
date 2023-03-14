@@ -4,7 +4,7 @@ function toggleTheme() {
     } else {
         localStorage.setItem('theme', 'dark');
     }
-    applyTheme()
+    applyTheme();
 }
 
 function applyTheme() {

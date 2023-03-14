@@ -1,5 +1,5 @@
-import Swal from 'sweetalert2'
-import 'sweetalert2/dist/sweetalert2.css'
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 export default function swal() {
     return {
@@ -18,5 +18,5 @@ function mixin(icon, msg) {
             toast.addEventListener('mouseenter', Swal.stopTimer);
             toast.addEventListener('mouseleave', Swal.resumeTimer);
         },
-    }).fire({icon, title: msg});
+    }).fire({ icon, title: msg });
 }

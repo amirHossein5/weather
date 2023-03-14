@@ -1,7 +1,7 @@
-import swal from '@vendor/js/alerts/swal'
+import swal from '@vendor/js/alerts/swal';
 
 export default function alerts() {
     return {
-        swal
-    }
+        swal,
+    };
 }

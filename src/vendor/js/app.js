@@ -1,10 +1,9 @@
 import Alpine from 'alpinejs';
 
-import { hasRequiredData, setLocalStorageData } from '@vendor/js/helpers';
-import getCities from '@vendor/js/api/cities-api';
 import alerts from '@vendor/js/alerts/alerts';
+import getCities from '@vendor/js/api/cities-api';
+import { hasRequiredData, setLocalStorageData } from '@vendor/js/helpers';
 import showWeather from '@vendor/js/show-weather';
-import * as weatherIcon from '@vendor/js/weather-icon'
 
 Alpine.start();
 window.alerts = alerts;

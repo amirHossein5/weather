@@ -1,4 +1,4 @@
-import { setAttributes, bestMatchQuery } from '@vendor/js/helpers';
+import { bestMatchQuery, setAttributes } from '@vendor/js/helpers';
 
 const PREVIOUS_INDEX = 0;
 const CURRENT_INDEX = 1;
@@ -21,7 +21,7 @@ export default class Chart {
             chartPathClasses = [],
         }
     ) {
-        height = bestMatchQuery(responsiveHeight, height)
+        height = bestMatchQuery(responsiveHeight, height);
 
         this.height = height;
         this.width = width;
@@ -31,7 +31,7 @@ export default class Chart {
         this.fewest_entry = fewest_entry;
         this.chartBgColor = chartBgColor;
         this.strokeColor = strokeColor;
-        this.topChartPathClasses = topChartPathClasses
+        this.topChartPathClasses = topChartPathClasses;
         this.chartPathClasses = chartPathClasses;
     }
 
@@ -50,16 +50,14 @@ export default class Chart {
         let topChartPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         let drawAttribute = this.get_d_attribute_value(previous, current, next);
 
-        path.classList.add(...this.chartPathClasses)
-        topChartPath.classList.add(...this.topChartPathClasses)
+        path.classList.add(...this.chartPathClasses);
+        topChartPath.classList.add(...this.topChartPathClasses);
 
         setAttributes(svg, [
             ['width', this.width],
             ['height', this.height],
         ]);
-        setAttributes(path, [
-            ['d', this.closeDraw(drawAttribute)],
-        ]);
+        setAttributes(path, [['d', this.closeDraw(drawAttribute)]]);
         setAttributes(topChartPath, [
             ['d', drawAttribute],
             ['fill', 'none'],
