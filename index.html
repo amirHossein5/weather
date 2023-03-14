@@ -7,8 +7,8 @@
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
 
         
-      <script type="module" crossorigin src="/weather/assets/main-572c5bd3.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-e0656954.css">
+      <script type="module" crossorigin src="/weather/assets/main-d248071a.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-36235f15.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -188,7 +188,7 @@
             <section class="flex h-full justify-center xs:h-auto">
                 <form
                     id="locationForm"
-                    class="w-full rounded rounded-t-none border bg-[var(--elements-bg)] px-1 pt-6 pb-4 xs:w-auto sm:rounded-t"
+                    class="w-full rounded rounded-t-none border bg-[var(--elements-bg)] px-1 sm:pt-6 pt-8 pb-4 xs:w-auto sm:rounded-t"
                     x-data="locationForm"
                 >
                     <div class="flex flex-col items-center gap-2 px-3 xs:flex-row xs:items-start xs:justify-center">
@@ -203,7 +203,7 @@
                         />
 
                         <button
-                            class="w-full rounded bg-green-800 px-2 py-1 text-white xs:py-2"
+                            class="w-full rounded bg-green-800 p-2 text-white"
                             x-bind:disabled="loading"
                             x-bind:class="{ 'bg-green-900': loading }"
                             type="button"
@@ -221,18 +221,18 @@
 
                     <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
 
-                    <div class="max-h-[calc(100vh-13rem)] overflow-y-auto px-1">
+                    <div class="max-h-[calc(100vh-13.5rem)] overflow-y-auto px-1">
                         <template x-for="(city, index) in cities">
                             <button
                                 type="button"
                                 x-on:click="selectedCityIndex=index"
-                                x-bind:class="{ 'bg-green-700 text-white': selectedCityIndex === index }"
-                                class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-1 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
+                                x-bind:class="{ 'bg-green-900 text-white': selectedCityIndex === index }"
+                                class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-2 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
                             >
-                                <div>
+                                <div class="flex-shrink-0">
                                     <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
                                 </div>
-                                <div class="flex">
+                                <div class="flex flex-wrap">
                                     <span x-text="city.name"></span>
                                     <span
                                         x-show="city.province !== '' && city.province !== undefined"
@@ -245,7 +245,7 @@
 
                     <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
                         <button
-                            class="mt-6 w-full rounded bg-green-800 p-1 text-white"
+                            class="mt-6 w-full rounded bg-green-800 p-2 text-white"
                             x-bind:disabled="loading"
                             x-bind:class="{ 'bg-green-900': loading }"
                             x-on:click.prevent="setLocalStorageData()"
