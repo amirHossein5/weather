@@ -18,7 +18,13 @@
                         </div>
                         <div class="">
                             <div class="flex items-center gap-1 text-sm font-semibold">
-                                <span x-data x-text="`${localStorage.city}, ${localStorage.province}`"></span>
+                                <span x-data class="flex">
+                                    <span x-text="localStorage.city"></span>
+                                    <span
+                                        x-show="localStorage.province !== '' && localStorage.province !== 'undefined'"
+                                        x-text="', '+localStorage.province"
+                                    ></span>
+                                </span>
                                 <span
                                     x-data
                                     x-on:click="localStorage.clear(); location.reload()"
