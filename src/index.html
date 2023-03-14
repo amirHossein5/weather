@@ -224,13 +224,13 @@
                             <button
                                 type="button"
                                 x-on:click="selectedCityIndex=index"
-                                x-bind:class="{ 'bg-green-700 text-white': selectedCityIndex === index }"
-                                class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-1 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
+                                x-bind:class="{ 'bg-green-900 text-white': selectedCityIndex === index }"
+                                class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-2 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
                             >
-                                <div>
+                                <div class="flex-shrink-0">
                                     <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
                                 </div>
-                                <div class="flex">
+                                <div class="flex flex-wrap">
                                     <span x-text="city.name"></span>
                                     <span
                                         x-show="city.province !== '' && city.province !== undefined"
