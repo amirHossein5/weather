@@ -18,7 +18,7 @@ jobs:
       - name: Installing prettier
         run: npm i
       - name: formatting
-        run: npx prettier --check .
+        run: npx prettier --write .
     
       - name: push changes
         run: |
