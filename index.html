@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Weather forecast</title>
+
+        
+      <script type="module" crossorigin src="/assets/main-e19bbd74.js"></script>
+      <link rel="stylesheet" href="/assets/index-50bbf137.css">
+    </head>
+
+    <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
+        <header class="relative hidden pt-5">
+            <section class="container mx-auto border-b pb-2">
+                <section class="">
+                    <div class="flex flex-row items-end gap-2">
+                        <div class="" id="icons">
+                            <img class="w-20" data-current-weather-icon />
+                        </div>
+                        <div class="">
+                            <div class="flex items-center gap-1 text-sm font-semibold">
+                                <span x-data class="flex">
+                                    <span x-text="localStorage.city"></span>
+                                    <span
+                                        x-show="localStorage.province !== '' && localStorage.province !== 'undefined'"
+                                        x-text="', '+localStorage.province"
+                                    ></span>
+                                </span>
+                                <span
+                                    x-data
+                                    x-on:click="localStorage.clear(); location.reload()"
+                                    class="cursor-pointer rounded p-1 transition hover:bg-[var(--hover-color)]"
+                                >
+                                    <!-- prettier-ignore -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 22" style="fill: var(--text-color);transform: ;msFilter:;">
+                                        <path d="M19 7a1 1 0 0 0-1-1h-8v2h7v5h-3l3.969 5L22 13h-3V7zM5 17a1 1 0 0 0 1 1h8v-2H7v-5h3L6 6l-4 5h3v6z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
+                            <span class="text-sm font-medium"
+                                >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
+                            >
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </header>
+
+        <main class="pb-20">
+            <section class="container mx-auto hidden">
+                <!-- recent later hours -->
+                <div class="hourly-slider splide mt-4 flex cursor-grab overflow-auto rounded-md border pb-0">
+                    <div class="splide__track">
+                        <div class="splide__list" id="recent-later-hours">
+                            <template>
+                                <div
+                                    class="splide__slide flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
+                                >
+                                    <div class="flex flex-col items-center gap-y-1 pb-2">
+                                        <p class="text-sm font-semibold" data-hourly-datetime></p>
+                                        <img class="w-10" data-hourly-icon />
+                                    </div>
+                                    <div data-hourly-area-chart></div>
+                                    <div
+                                        class="bg-[var(--chart-bg-color)] p-3 text-center text-sm font-extrabold text-[var(--chart-text-color)]"
+                                    >
+                                        <span data-hourly-temperature></span>&deg;
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- daily summary -->
+                <div class="mt-10">
+                    <div class="flex justify-center">
+                        <h1
+                            class="relative py-1 px-4 text-xl after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:block after:h-1 after:w-full after:bg-blue-400"
+                        >
+                            Daily
+                        </h1>
+                    </div>
+
+                    <div class="flex justify-center">
+                        <div class="daily-summary-slider splide mt-4 cursor-grab overflow-auto rounded-md border">
+                            <div class="splide__track">
+                                <div class="splide__list" id="daily-summary">
+                                    <template>
+                                        <div
+                                            class="splide__slide flex w-20 flex-col items-center border-r bg-[var(--chart-section-bg-color)] pt-6 pb-3 last:border-r-0 md:w-24 lg:w-28"
+                                        >
+                                            <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
+                                            <p data-daily-summary-date class="text-xs">Mar 9</p>
+                                            <img data-daily-summary-icon class="mt-2 w-10" />
+
+                                            <div data-daily-summary-line-chart class="mt-3 grow"></div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="hours-of-day" class="mt-20">
+                        <template>
+                            <div class="mb-8 flex flex-col items-center">
+                                <h1
+                                    class="relative py-1 text-xl after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:block after:h-1 after:w-full after:bg-blue-400"
+                                    data-day-hours-date
+                                ></h1>
+                                <div
+                                    class="day-hours-slider splide mt-6 w-full cursor-grab overflow-auto rounded-md border pb-0"
+                                >
+                                    <div class="splide__track">
+                                        <div class="splide__list day-hours">
+                                            <template>
+                                                <div
+                                                    class="splide__slide flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
+                                                >
+                                                    <div class="flex flex-col items-center gap-y-1 pb-2">
+                                                        <p class="text-sm font-semibold" data-hourly-datetime></p>
+                                                        <img class="w-10" data-hourly-icon />
+                                                    </div>
+                                                    <div data-hourly-area-chart></div>
+                                                    <div
+                                                        class="bg-[var(--chart-bg-color)] p-3 text-center text-sm font-extrabold text-[var(--chart-text-color)]"
+                                                    >
+                                                        <span data-hourly-temperature></span>&deg;
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="container mx-auto mt-16 flex hidden flex-wrap items-center justify-center gap-4 border-t py-2">
+            <a href="https://github.com/amirhossein5/weather" class="rounded-xl p-2 hover:bg-[var(--elements-bg)]">
+                <img src="icons/github-icon.svg" class="w-8" />
+            </a>
+            <section id="theme-toggler" class="hidden" x-data>
+                <div
+                    class="light cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
+                    x-on:click="toggleTheme()"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-7 w-7"
+                    >
+                        <path
+                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                            class="stroke-slate-400 dark:stroke-slate-500"
+                        ></path>
+                        <path
+                            d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"
+                            class="stroke-slate-400 dark:stroke-slate-500"
+                        ></path>
+                    </svg>
+                </div>
+                <div
+                    class="dark cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
+                    x-on:click="toggleTheme()"
+                >
+                    <svg viewBox="0 0 24 24" fill="none" class="h-7 w-7">
+                        <path
+                            d="m17.715 15.15.95.316a1 1 0 0 0-1.445-1.185l.495.869ZM9 6.035l.846.534a1 1 0 0 0-1.14-1.49L9 6.035Zm8.221 8.246a5.47 5.47 0 0 1-2.72.718v2a7.47 7.47 0 0 0 3.71-.98l-.99-1.738Zm-2.72.718A5.5 5.5 0 0 1 9 9.5H7a7.5 7.5 0 0 0 7.5 7.5v-2ZM9 9.5c0-1.079.31-2.082.845-2.93L8.153 5.5A7.47 7.47 0 0 0 7 9.5h2Zm-4 3.368C5 10.089 6.815 7.75 9.292 6.99L8.706 5.08C5.397 6.094 3 9.201 3 12.867h2Zm6.042 6.136C7.718 19.003 5 16.268 5 12.867H3c0 4.48 3.588 8.136 8.042 8.136v-2Zm5.725-4.17c-.81 2.433-3.074 4.17-5.725 4.17v2c3.552 0 6.553-2.327 7.622-5.537l-1.897-.632Z"
+                            class="fill-slate-400 dark:fill-slate-500"
+                        ></path>
+                    </svg>
+                </div>
+            </section>
+        </footer>
+
+        <section class="absolute top-0 right-0 left-0 bottom-0 hidden sm:top-5 md:top-10">
+            <section class="flex h-full justify-center xs:h-auto">
+                <form
+                    id="locationForm"
+                    class="w-full rounded rounded-t-none border bg-[var(--elements-bg)] px-1 pt-6 pb-4 xs:w-auto sm:rounded-t"
+                    x-data="locationForm"
+                >
+                    <div class="flex flex-col items-center gap-2 px-3 xs:flex-row xs:items-start xs:justify-center">
+                        <input
+                            type="text"
+                            id="cityInput"
+                            class="w-full rounded border p-2 outline-none xs:w-auto"
+                            x-on:input.debounce.800="updateCities()"
+                            x-on:keydown.window.prevent.slash="$el.focus()"
+                            x-on:keydown.enter.prevent
+                            x-model="keyword"
+                        />
+
+                        <button
+                            class="w-full rounded bg-green-800 px-2 py-1 text-white xs:py-2"
+                            x-bind:disabled="loading"
+                            x-bind:class="{ 'bg-green-900': loading }"
+                            type="button"
+                            x-on:click="updateCities()"
+                        >
+                            <!-- prettier-ignore -->
+                            <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+
+                            search for city
+                        </button>
+                    </div>
+
+                    <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
+
+                    <div class="max-h-[calc(100vh-13rem)] overflow-y-auto px-1">
+                        <template x-for="(city, index) in cities">
+                            <button
+                                type="button"
+                                x-on:click="selectedCityIndex=index"
+                                x-bind:class="{ 'bg-green-700 text-white': selectedCityIndex === index }"
+                                class="flex w-full cursor-pointer items-center gap-2 rounded border border-b border-[var(--theme-bg)] px-1 py-2 focus:border-blue-200 focus:outline-none sm:gap-3"
+                            >
+                                <div>
+                                    <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
+                                </div>
+                                <div class="flex">
+                                    <span x-text="city.name"></span>
+                                    <span
+                                        x-show="city.province !== '' && city.province !== undefined"
+                                        x-text="', '+city.province"
+                                    ></span>
+                                </div>
+                            </button>
+                        </template>
+                    </div>
+
+                    <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
+                        <button
+                            class="mt-6 w-full rounded bg-green-800 p-1 text-white"
+                            x-bind:disabled="loading"
+                            x-bind:class="{ 'bg-green-900': loading }"
+                            x-on:click.prevent="setLocalStorageData()"
+                        >
+                            <!-- prettier-ignore -->
+                            <svg x-show="loading" class="animate-spin -ml-1 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+
+                            Get weather
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </section>
+
+        <script src="js/theme.js"></script>
+        
+        <script>
+            function locationForm() {
+                return {
+                    loading: false,
+                    selectedCityIndex: undefined,
+                    cities: [],
+                    keyword: '',
+                    updateCities() {
+                        this.selectedCityIndex = undefined;
+                        this.loading = true;
+
+                        getCities(this.keyword)
+                            .then((cities) => {
+                                this.cities = cities;
+                                this.loading = false;
+                            })
+                            .catch((err) => {
+                                alerts().swal().mixin('error', 'failed to get cities..');
+                                this.loading = false;
+                            });
+                    },
+                    setLocalStorageData() {
+                        if (!(this.selectedCityIndex in this.cities)) {
+                            alerts().swal().mixin('error', 'select your city');
+                            return;
+                        }
+
+                        this.loading = true;
+                        city = this.cities[this.selectedCityIndex];
+
+                        window.setLocalStorageData({
+                            lat: city.latitude,
+                            long: city.longitude,
+                            timezone: city.timezone,
+                            city: city.name,
+                            province: city.province,
+                        });
+
+                        location.reload();
+                    },
+                };
+            }
+        </script>
+    </body>
+</html>
