@@ -13,13 +13,13 @@
         <header class="relative hidden pt-5">
             <section class="container mx-auto border-b pb-2">
                 <section class="">
-                    <div class="flex flex-row items-end gap-2">
-                        <div class="" id="icons">
+                    <div class="flex flex-row items-center gap-2">
+                        <div class="shrink-0" id="icons">
                             <img class="w-20" data-current-weather-icon />
                         </div>
                         <div class="">
                             <div class="flex items-center gap-1 text-sm font-semibold">
-                                <span x-data class="flex">
+                                <span x-data class="flex flex-wrap">
                                     <span x-text="localStorage.city"></span>
                                     <span
                                         x-show="localStorage.province !== '' && localStorage.province !== 'undefined'"
@@ -37,10 +37,12 @@
                                     </svg>
                                 </span>
                             </div>
-                            <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
-                            <span class="text-sm font-medium"
-                                >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
-                            >
+                            <div class="flex items-end flex-wrap">
+                                <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
+                                <span class="text-sm font-medium"
+                                    >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
+                                >
+                            </div>
                         </div>
                     </div>
                 </section>
