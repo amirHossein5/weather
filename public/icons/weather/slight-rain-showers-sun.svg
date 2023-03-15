@@ -119,7 +119,7 @@
             </g>
         </g>
         <g transform="translate(35,52), rotate(10)">
-            <line class="am-weather-rain-1" fill="none" stroke="#91C0F8" stroke-linecap="round" transform="translate(-6,1)" x1="0" x2="0" y1="0" stroke-width="3" y2="12" stroke-dasharray="5,9"/>
+            <line class="am-weather-rain-1" fill="none" stroke="#91C0F8" stroke-linecap="round" transform="translate(-6,1)" x1="0" x2="0" y1="0" stroke-width="2" y2="12" stroke-dasharray="5,9"/>
         </g>
     </g>
 </svg>
