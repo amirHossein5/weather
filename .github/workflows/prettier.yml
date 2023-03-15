@@ -19,7 +19,7 @@ jobs:
         run: npm i
       - name: formatting
         run: |
-          !npx prettier --check . && npx prettier --write .
+          ! npx prettier --check . && npx prettier --write .
     
       - name: push changes
         run: |
