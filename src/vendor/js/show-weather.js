@@ -1,12 +1,10 @@
-import Splide from '@splidejs/splide';
-import '@splidejs/splide/css';
-
 import alerts from '@vendor/js/alerts/alerts';
 import weatherOf from '@vendor/js/api/weather-api';
 import AreaChart from '@vendor/js/chart/area-chart';
 import LineChart from '@vendor/js/chart/line-chart';
 import { cloneObject, maxObjectValueOfKey, minObjectValueOfKey, setElementsData } from '@vendor/js/helpers';
 import * as pageLoading from '@vendor/js/page-loading';
+import makeDraggable from '@vendor/js/make-draggable'
 
 let areaChartOptions = {
     responsiveHeight: {
@@ -41,16 +39,8 @@ let lineChartOptions = {
         'from-[var(--coldest-degree-text-color)]',
         'via-[#B0A850]',
         'to-[var(--hottest-degree-text-color)]',
-        'bg-fixed',
     ],
     containerClasses: ['sm:gap-y-2', 'gap-y-1'],
-};
-
-let splideOptions = {
-    autoWidth: true,
-    autoHeight: true,
-    arrows: false,
-    pagination: false,
 };
 
 export default function showWeather() {
@@ -86,7 +76,7 @@ function fillWeatherData(weather) {
     fillHoursData({
         hours: weather.recentLaterHours,
         onSelector: document.querySelector('#recent-later-hours'),
-        splideSelector: '.hourly-slider',
+        draggableSelector: '#recent-later-hours',
         areaChartOptions: areaChartOptions,
     });
     fillDailySummaryWeather(weather.daily);
@@ -98,7 +88,7 @@ function fillCurrentWeather({ datetime, temperature, apparentTemperature, icon }
     setElementsData('current-weather-apparent-temp', (el) => (el.innerHTML = apparentTemperature));
 }
 
-function fillHoursData({ hours, onSelector, splideSelector, areaChartOptions }) {
+function fillHoursData({ hours, onSelector, draggableSelector, areaChartOptions }) {
     let hourDataSection = onSelector;
     let templateSelector = hourDataSection.querySelector('template');
     const minTemp = minObjectValueOfKey('temperature', hours);
@@ -120,8 +110,8 @@ function fillHoursData({ hours, onSelector, splideSelector, areaChartOptions }) 
     });
 
     templateSelector.remove();
-    if (splideSelector !== undefined) {
-        new Splide(splideSelector, splideOptions).mount();
+    if (draggableSelector !== undefined) {
+        makeDraggable(draggableSelector)
     }
 }
 
@@ -147,7 +137,7 @@ function fillDailySummaryWeather(days) {
     fillDailyHoursData(days);
 
     templateSelector.remove();
-    new Splide('.daily-summary-slider', splideOptions).mount();
+    makeDraggable('.daily-summary-draggable')
 }
 
 function fillDailyHoursData(days) {
@@ -167,7 +157,6 @@ function fillDailyHoursData(days) {
         fillHoursData({
             hours: day.hourly,
             onSelector: template.querySelector('div.day-hours'),
-            splideSelector: undefined,
             areaChartOptions: newAreaChartOptions,
         });
 
@@ -175,8 +164,8 @@ function fillDailyHoursData(days) {
     });
 
     dailyHoursSection.querySelector('template').remove();
-    document.querySelectorAll('.day-hours-slider').forEach((slider) => {
-        new Splide(slider, splideOptions).mount();
+    document.querySelectorAll('.day-hours-draggable').forEach((draggable) => {
+        makeDraggable(undefined, draggable)
     });
 }
 
