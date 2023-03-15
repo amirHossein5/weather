@@ -7,7 +7,7 @@
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
 
         
-      <script type="module" crossorigin src="/weather/assets/main-73bb9fa2.js"></script>
+      <script type="module" crossorigin src="/weather/assets/main-07ee29c4.js"></script>
       <link rel="stylesheet" href="/weather/assets/index-fd2781a2.css">
     </head>
 
@@ -39,7 +39,7 @@
                                     </svg>
                                 </span>
                             </div>
-                            <div class="flex items-end flex-wrap">
+                            <div class="flex flex-wrap items-end">
                                 <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
                                 <span class="text-sm font-medium"
                                     >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
@@ -133,11 +133,12 @@
 
             <section class="container mx-auto hidden">
                 <!-- recent later hours -->
-                <div class="mt-4 flex  select-none cursor-grab overflow-auto rounded-md border pb-0" id="recent-later-hours">
+                <div
+                    class="mt-4 flex cursor-grab select-none overflow-auto rounded-md border pb-0"
+                    id="recent-later-hours"
+                >
                     <template>
-                        <div
-                            class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
-                        >
+                        <div class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0">
                             <div class="flex flex-col items-center gap-y-1 pb-2">
                                 <p class="text-sm font-semibold" data-hourly-datetime></p>
                                 <img class="w-10" data-hourly-icon />
@@ -163,7 +164,10 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <div class="daily-summary-draggable select-none mt-4 cursor-grab overflow-auto rounded-md border flex" id="daily-summary">
+                        <div
+                            class="daily-summary-draggable mt-4 flex cursor-grab select-none overflow-auto rounded-md border"
+                            id="daily-summary"
+                        >
                             <template>
                                 <div
                                     class="flex w-20 shrink-0 flex-col items-center border-r bg-[var(--chart-section-bg-color)] pt-6 pb-3 last:border-r-0 md:w-24 lg:w-28"
@@ -186,7 +190,7 @@
                                     data-day-hours-date
                                 ></h1>
                                 <div
-                                    class="day-hours day-hours-draggable select-none flex select-none mt-6 w-full cursor-grab overflow-auto rounded-md border pb-0"
+                                    class="day-hours day-hours-draggable mt-6 flex w-full cursor-grab select-none select-none overflow-auto rounded-md border pb-0"
                                 >
                                     <template>
                                         <div

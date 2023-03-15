@@ -50,7 +50,7 @@
             </g>
         </g>
         <g transform="translate(35,56), rotate(10)">
-            <line class="am-weather-rain-1" fill="none" stroke="#57A0EE" stroke-linecap="round" transform="translate(-6,-1)" x1="0" x2="0" y1="0" stroke-width="5" y2="12" stroke-dasharray="8,9"/>
+            <line class="am-weather-rain-1" fill="none" stroke="#57A0EE" stroke-linecap="round" transform="translate(-6,-1)" x1="0" x2="0" y1="0" stroke-width="3" y2="12" stroke-dasharray="4,9"/>
         </g>
     </g>
 </svg>

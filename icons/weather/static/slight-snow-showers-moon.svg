@@ -33,10 +33,10 @@
         </g>
         <g class="am-weather-snow-1">
             <g transform="translate(38,47)">
-                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="2.8" transform="translate(0,9), rotate(0)" x1="0" x2="0" y1="-6" y2="6"/>
-                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="2.8" transform="translate(0,9), rotate(45)" x1="0" x2="0" y1="-6" y2="6"/>
-                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="2.8" transform="translate(0,9), rotate(90)" x1="0" x2="0" y1="-6" y2="6"/>
-                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="2.8" transform="translate(0,9), rotate(135)" x1="0" x2="0" y1="-6" y2="6"/>
+                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="1" transform="translate(0,9), rotate(0)" x1="0" x2="0" y1="-4" y2="4"/>
+                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="1" transform="translate(0,9), rotate(45)" x1="0" x2="0" y1="-4" y2="4"/>
+                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="1" transform="translate(0,9), rotate(90)" x1="0" x2="0" y1="-4" y2="4"/>
+                <line fill="none" stroke="#57A0EE" stroke-linecap="round" stroke-width="1" transform="translate(0,9), rotate(135)" x1="0" x2="0" y1="-4" y2="4"/>
             </g>
         </g>
     </g>
