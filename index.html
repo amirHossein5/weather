@@ -7,21 +7,21 @@
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
 
         
-      <script type="module" crossorigin src="/weather/assets/main-0a1379bb.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-d122d645.css">
+      <script type="module" crossorigin src="/weather/assets/main-73bb9fa2.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-fd2781a2.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
         <header class="relative hidden pt-5">
             <section class="container mx-auto border-b pb-2">
                 <section class="">
-                    <div class="flex flex-row items-end gap-2">
-                        <div class="" id="icons">
+                    <div class="flex flex-row items-center gap-2">
+                        <div class="shrink-0" id="icons">
                             <img class="w-20" data-current-weather-icon />
                         </div>
                         <div class="">
                             <div class="flex items-center gap-1 text-sm font-semibold">
-                                <span x-data class="flex">
+                                <span x-data class="flex flex-wrap">
                                     <span x-text="localStorage.city"></span>
                                     <span
                                         x-show="localStorage.province !== '' && localStorage.province !== 'undefined'"
@@ -39,10 +39,12 @@
                                     </svg>
                                 </span>
                             </div>
-                            <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
-                            <span class="text-sm font-medium"
-                                >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
-                            >
+                            <div class="flex items-end flex-wrap">
+                                <span class="text-5xl font-semibold"><span data-current-weather-temp></span>&deg;</span>
+                                <span class="text-sm font-medium"
+                                    >Feels like <span data-current-weather-apparent-temp></span>&deg;</span
+                                >
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -87,7 +89,7 @@
 
                         <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
 
-                        <div class="max-h-[calc(100vh-10rem)] overflow-y-auto px-1">
+                        <div class="overflow-y-auto px-1">
                             <template x-for="(city, index) in cities">
                                 <button
                                     type="button"
@@ -131,27 +133,23 @@
 
             <section class="container mx-auto hidden">
                 <!-- recent later hours -->
-                <div class="hourly-slider splide mt-4 flex cursor-grab overflow-auto rounded-md border pb-0">
-                    <div class="splide__track">
-                        <div class="splide__list" id="recent-later-hours">
-                            <template>
-                                <div
-                                    class="splide__slide flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
-                                >
-                                    <div class="flex flex-col items-center gap-y-1 pb-2">
-                                        <p class="text-sm font-semibold" data-hourly-datetime></p>
-                                        <img class="w-10" data-hourly-icon />
-                                    </div>
-                                    <div data-hourly-area-chart></div>
-                                    <div
-                                        class="bg-[var(--chart-bg-color)] p-3 text-center text-sm font-extrabold text-[var(--chart-text-color)]"
-                                    >
-                                        <span data-hourly-temperature></span>&deg;
-                                    </div>
-                                </div>
-                            </template>
+                <div class="mt-4 flex  select-none cursor-grab overflow-auto rounded-md border pb-0" id="recent-later-hours">
+                    <template>
+                        <div
+                            class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
+                        >
+                            <div class="flex flex-col items-center gap-y-1 pb-2">
+                                <p class="text-sm font-semibold" data-hourly-datetime></p>
+                                <img class="w-10" data-hourly-icon />
+                            </div>
+                            <div data-hourly-area-chart></div>
+                            <div
+                                class="bg-[var(--chart-bg-color)] p-3 text-center text-sm font-extrabold text-[var(--chart-text-color)]"
+                            >
+                                <span data-hourly-temperature></span>&deg;
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
 
                 <!-- daily summary -->
@@ -165,22 +163,18 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <div class="daily-summary-slider splide mt-4 cursor-grab overflow-auto rounded-md border">
-                            <div class="splide__track">
-                                <div class="splide__list" id="daily-summary">
-                                    <template>
-                                        <div
-                                            class="splide__slide flex w-20 flex-col items-center border-r bg-[var(--chart-section-bg-color)] pt-6 pb-3 last:border-r-0 md:w-24 lg:w-28"
-                                        >
-                                            <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
-                                            <p data-daily-summary-date class="text-xs">Mar 9</p>
-                                            <img data-daily-summary-icon class="mt-2 w-10" />
+                        <div class="daily-summary-draggable select-none mt-4 cursor-grab overflow-auto rounded-md border flex" id="daily-summary">
+                            <template>
+                                <div
+                                    class="flex w-20 shrink-0 flex-col items-center border-r bg-[var(--chart-section-bg-color)] pt-6 pb-3 last:border-r-0 md:w-24 lg:w-28"
+                                >
+                                    <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
+                                    <p data-daily-summary-date class="text-xs">Mar 9</p>
+                                    <img data-daily-summary-icon class="mt-2 w-10" />
 
-                                            <div data-daily-summary-line-chart class="mt-3 grow"></div>
-                                        </div>
-                                    </template>
+                                    <div data-daily-summary-line-chart class="mt-3 grow"></div>
                                 </div>
-                            </div>
+                            </template>
                         </div>
                     </div>
 
@@ -192,28 +186,24 @@
                                     data-day-hours-date
                                 ></h1>
                                 <div
-                                    class="day-hours-slider splide mt-6 w-full cursor-grab overflow-auto rounded-md border pb-0"
+                                    class="day-hours day-hours-draggable select-none flex select-none mt-6 w-full cursor-grab overflow-auto rounded-md border pb-0"
                                 >
-                                    <div class="splide__track">
-                                        <div class="splide__list day-hours">
-                                            <template>
-                                                <div
-                                                    class="splide__slide flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
-                                                >
-                                                    <div class="flex flex-col items-center gap-y-1 pb-2">
-                                                        <p class="text-sm font-semibold" data-hourly-datetime></p>
-                                                        <img class="w-10" data-hourly-icon />
-                                                    </div>
-                                                    <div data-hourly-area-chart></div>
-                                                    <div
-                                                        class="bg-[var(--chart-bg-color)] p-3 text-center text-sm font-extrabold text-[var(--chart-text-color)]"
-                                                    >
-                                                        <span data-hourly-temperature></span>&deg;
-                                                    </div>
-                                                </div>
-                                            </template>
+                                    <template>
+                                        <div
+                                            class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
+                                        >
+                                            <div class="flex flex-col items-center gap-y-1 pb-2">
+                                                <p class="text-sm font-semibold" data-hourly-datetime></p>
+                                                <img class="w-10" data-hourly-icon />
+                                            </div>
+                                            <div data-hourly-area-chart></div>
+                                            <div
+                                                class="bg-[var(--chart-bg-color)] p-3 text-center text-sm font-extrabold text-[var(--chart-text-color)]"
+                                            >
+                                                <span data-hourly-temperature></span>&deg;
+                                            </div>
                                         </div>
-                                    </div>
+                                    </template>
                                 </div>
                             </div>
                         </template>
