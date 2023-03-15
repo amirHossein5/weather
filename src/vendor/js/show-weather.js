@@ -3,8 +3,8 @@ import weatherOf from '@vendor/js/api/weather-api';
 import AreaChart from '@vendor/js/chart/area-chart';
 import LineChart from '@vendor/js/chart/line-chart';
 import { cloneObject, maxObjectValueOfKey, minObjectValueOfKey, setElementsData } from '@vendor/js/helpers';
+import makeDraggable from '@vendor/js/make-draggable';
 import * as pageLoading from '@vendor/js/page-loading';
-import makeDraggable from '@vendor/js/make-draggable'
 
 let areaChartOptions = {
     responsiveHeight: {
@@ -111,7 +111,7 @@ function fillHoursData({ hours, onSelector, draggableSelector, areaChartOptions 
 
     templateSelector.remove();
     if (draggableSelector !== undefined) {
-        makeDraggable(draggableSelector)
+        makeDraggable(draggableSelector);
     }
 }
 
@@ -137,7 +137,7 @@ function fillDailySummaryWeather(days) {
     fillDailyHoursData(days);
 
     templateSelector.remove();
-    makeDraggable('.daily-summary-draggable')
+    makeDraggable('.daily-summary-draggable');
 }
 
 function fillDailyHoursData(days) {
@@ -165,7 +165,7 @@ function fillDailyHoursData(days) {
 
     dailyHoursSection.querySelector('template').remove();
     document.querySelectorAll('.day-hours-draggable').forEach((draggable) => {
-        makeDraggable(undefined, draggable)
+        makeDraggable(undefined, draggable);
     });
 }
 

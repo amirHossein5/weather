@@ -1,15 +1,15 @@
 export default function makeDraggable(selector, element, scrollSpeed = 3) {
-  let slider;
+    let slider;
 
     if (element !== undefined) {
-      slider = element;
+        slider = element;
     } else {
-      slider = document.querySelector(selector);
+        slider = document.querySelector(selector);
     }
 
-    if (slider === null) return
+    if (slider === null) return;
 
-    slider.scrollLeft = 0
+    slider.scrollLeft = 0;
     let mouseDown = false;
     let startX, scrollLeft;
 
