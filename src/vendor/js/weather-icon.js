@@ -70,5 +70,8 @@ export function icons() {
 }
 
 export function iconOf(weatherCode) {
+    if (weatherCode === null || weatherCode === undefined) {
+        return ICON_MAP.get(0)
+    }
     return ICON_MAP.get(weatherCode);
 }
