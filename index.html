@@ -7,7 +7,7 @@
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
 
         
-      <script type="module" crossorigin src="/weather/assets/main-a7991ad9.js"></script>
+      <script type="module" crossorigin src="/weather/assets/main-a1ba6bb1.js"></script>
       <link rel="stylesheet" href="/weather/assets/index-fd2781a2.css">
     </head>
 
@@ -223,7 +223,7 @@
             <section id="theme-toggler" class="hidden" x-data>
                 <div
                     class="light cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
-                    x-on:click="toggleTheme()"
+                    x-on:click="changeThemeToLight()"
                 >
                     <svg
                         viewBox="0 0 24 24"
@@ -245,7 +245,7 @@
                 </div>
                 <div
                     class="dark cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
-                    x-on:click="toggleTheme()"
+                    x-on:click="changeThemeToDark()"
                 >
                     <svg viewBox="0 0 24 24" fill="none" class="h-7 w-7">
                         <path
@@ -257,7 +257,6 @@
             </section>
         </footer>
 
-        <script src="js/theme.js"></script>
         
         <script>
             function locationForm() {
