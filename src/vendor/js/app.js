@@ -4,15 +4,15 @@ import alerts from '@vendor/js/alerts/alerts';
 import getCities from '@vendor/js/api/cities-api';
 import { hasRequiredData, setLocalStorageData } from '@vendor/js/helpers';
 import showWeather from '@vendor/js/show-weather';
-import {applyTheme, changeThemeToLight, changeThemeToDark} from '@vendor/js/theme'
+import { applyTheme, changeThemeToDark, changeThemeToLight } from '@vendor/js/theme';
 
 Alpine.start();
 window.alerts = alerts;
 window.setLocalStorageData = setLocalStorageData;
-window.changeThemeToDark = changeThemeToDark
-window.changeThemeToLight= changeThemeToLight
+window.changeThemeToDark = changeThemeToDark;
+window.changeThemeToLight = changeThemeToLight;
 
-applyTheme()
+applyTheme();
 
 if (hasRequiredData()) {
     showWeather();
