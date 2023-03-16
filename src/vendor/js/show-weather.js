@@ -49,8 +49,8 @@ export default function showWeather() {
     weatherOf({ lat: localStorage.lat, long: localStorage.long, timezone: localStorage.timezone })
         .then((weather) => {
             pageLoading.changeMsg('Parsing weather...');
-            fillWeatherData(weather);
             showHiddenElements();
+            fillWeatherData(weather);
             pageLoading.hide();
         })
         .catch((err) => {
