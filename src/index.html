@@ -28,7 +28,7 @@
                                 </span>
                                 <span
                                     x-data
-                                    x-on:click="localStorage.clear(); location.reload()"
+                                    x-on:click="localStorageClearExcept('theme'); location.reload()"
                                     class="cursor-pointer rounded p-1 transition hover:bg-[var(--hover-color)]"
                                 >
                                     <!-- prettier-ignore -->

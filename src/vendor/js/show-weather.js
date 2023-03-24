@@ -2,7 +2,7 @@ import alerts from '@vendor/js/alerts/alerts';
 import weatherOf from '@vendor/js/api/weather-api';
 import AreaChart from '@vendor/js/chart/area-chart';
 import LineChart from '@vendor/js/chart/line-chart';
-import { cloneObject, maxObjectValueOfKey, minObjectValueOfKey, setElementsData } from '@vendor/js/helpers';
+import { cloneObject, maxObjectValueOfKey, minObjectValueOfKey, setElementsData, localStorageClearExcept } from '@vendor/js/helpers';
 import makeDraggable from '@vendor/js/make-draggable';
 import * as pageLoading from '@vendor/js/page-loading';
 
@@ -59,7 +59,7 @@ export default function showWeather() {
             alerts().swal().mixin('error', 'Failed to get weather');
 
             setTimeout(function () {
-                localStorage.clear();
+                localStorageClearExcept('theme');
                 location.reload();
             }, 5000);
         });

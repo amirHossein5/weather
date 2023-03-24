@@ -117,3 +117,19 @@ export function maxObjectValueOfKey(objectKey, object) {
 export function cloneObject(object) {
     return JSON.parse(JSON.stringify(object));
 }
+
+/**
+ * @param  {string} key
+ */
+export function localStorageClearExcept(key) {
+    let keyValue = localStorage.getItem(key);
+    localStorage.clear();
+    if (! empty(keyValue)) localStorage.setItem(key,keyValue);
+}
+
+export function empty(value) {
+    if (value === undefined) return true;
+    if (value === null) return true;
+    if (value.trim() === '') return true;
+    return value === false;
+}
