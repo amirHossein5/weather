@@ -124,7 +124,7 @@ export function cloneObject(object) {
 export function localStorageClearExcept(key) {
     let keyValue = localStorage.getItem(key);
     localStorage.clear();
-    if (! empty(keyValue)) localStorage.setItem(key,keyValue);
+    if (!empty(keyValue)) localStorage.setItem(key, keyValue);
 }
 
 export function empty(value) {

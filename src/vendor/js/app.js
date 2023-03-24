@@ -2,7 +2,7 @@ import Alpine from 'alpinejs';
 
 import alerts from '@vendor/js/alerts/alerts';
 import getCities from '@vendor/js/api/cities-api';
-import { hasRequiredData, setLocalStorageData, localStorageClearExcept } from '@vendor/js/helpers';
+import { hasRequiredData, localStorageClearExcept, setLocalStorageData } from '@vendor/js/helpers';
 import showWeather from '@vendor/js/show-weather';
 import { applyTheme, changeThemeToDark, changeThemeToLight } from '@vendor/js/theme';
 
