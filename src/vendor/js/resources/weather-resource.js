@@ -88,7 +88,7 @@ function getCurrentHourIndex({ hourly, current_weather }) {
     for (let index in hourly.time) {
         let timestamp = hourly.time[index];
 
-        if (timestamp !== currentTimeStamp) {
+        if (timestamp < currentTimeStamp) {
             continue;
         }
 
