@@ -177,16 +177,35 @@
 
                     <div class="flex justify-center">
                         <div
-                            class="daily-summary-draggable mt-4 flex cursor-grab select-none overflow-auto rounded-md border"
+                            class="daily-summary-draggable gap-x-1 mt-4 flex cursor-grab select-none overflow-auto pb-2 px-2"
                             id="daily-summary"
                         >
                             <template>
                                 <div
-                                    class="flex w-20 shrink-0 flex-col items-center border-r bg-[var(--chart-section-bg-color)] pt-6 pb-3 last:border-r-0 md:w-24 lg:w-28"
+                                    class="flex w-20 shrink-0 flex-col rounded items-center border border-[var(--day-border-color)] hover:border-[var(--hover-day-bg)] hover:bg-[var(--hover-day-bg)] transition bg-[var(--chart-section-bg-color)] pt-6 pb-3 md:w-24 lg:w-28"
+                                    alpine-data
+                                    x-bind:class="{ '!bg-[var(--active-day-bg)] border-[var(--hover-day-bg)]': isActive}"
+                                    x-init="
+                                        if (isActive) {
+                                            fillDayHoursData(window.days[dayIndex], dayIndex);
+                                        } else {
+                                            removeDayHoursData(dayIndex);
+                                        }
+                                    "
+                                    x-on:click="
+                                        isActive = !isActive;
+                                        if (isActive) {
+                                            fillDayHoursData(window.days[dayIndex], dayIndex);
+                                        } else {
+                                            removeDayHoursData(dayIndex);
+                                        }
+                                    "
                                 >
-                                    <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
-                                    <p data-daily-summary-date class="text-xs">Mar 9</p>
-                                    <img data-daily-summary-icon class="h-10 mt-2 w-10" />
+                                    <button type="button">
+                                        <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
+                                        <p data-daily-summary-date class="text-xs">Mar 9</p>
+                                        <img data-daily-summary-icon class="h-10 mt-2 w-10" />
+                                    </button>
 
                                     <div data-daily-summary-line-chart class="mt-3 grow"></div>
                                 </div>
@@ -196,18 +215,16 @@
 
                     <div id="hours-of-day" class="mt-20">
                         <template>
-                            <div class="mb-8 flex flex-col items-center">
+                            <div class="mb-8 flex flex-col items-center" day-index>
                                 <h1
                                     class="relative py-1 text-xl after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:block after:h-1 after:w-full after:bg-blue-400"
                                     data-day-hours-date
                                 ></h1>
                                 <div
-                                    class="day-hours day-hours-draggable mt-6 flex w-full cursor-grab select-none select-none overflow-auto rounded-md border pb-0"
+                                    class="day-hours day-hours-draggable mt-6 flex w-full cursor-grab select-none select-none overflow-auto rounded-t pb-1"
                                 >
                                     <template>
-                                        <div
-                                            class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
-                                        >
+                                        <div class="flex flex-col border-r border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0">
                                             <div class="flex flex-col items-center gap-y-1 pb-2">
                                                 <p class="text-sm font-semibold" data-hourly-datetime></p>
                                                 <img class="h-10 w-10" data-hourly-icon />
@@ -223,6 +240,8 @@
                                 </div>
                             </div>
                         </template>
+
+                        <div id="hours-of-day-container"></div>
                     </div>
                 </div>
             </section>

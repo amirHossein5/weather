@@ -130,6 +130,46 @@ export function localStorageClearExcept(key) {
 export function empty(value) {
     if (value === undefined) return true;
     if (value === null) return true;
-    if (value.trim() === '') return true;
-    return value === false;
+    if (typeof value === 'string' && value.trim() === '') return true;
+    return value === true;
+}
+
+export function appendInAppropriateOrderAmongChilds(appendTo, newElement, currentValue, childsAttrName) {
+    if (currentValue === undefined) {
+        appendTo.append(newElement);
+        return;
+    }
+
+    if (appendTo.children.length === 0) {
+        appendTo.append(newElement);
+        return;
+    }
+
+    if (appendTo.querySelectorAll(`[${childsAttrName}]`).length === 0) {
+        appendTo.append(newElement);
+        return;
+    }
+
+    let children = Array.from(appendTo.children);
+    let insertBefore;
+
+    for(let index in children) {
+        let child = children[index];
+        let childValue = child.getAttribute(childsAttrName);
+
+        if(empty(childValue)) {
+            continue;
+        }
+        if (currentValue < childValue) {
+            insertBefore = child;
+            break
+        }
+    }
+
+    if (empty(insertBefore)) {
+        appendTo.append(newElement);
+        return;
+    }
+
+    appendTo.insertBefore(newElement, insertBefore);
 }

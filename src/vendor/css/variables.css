@@ -15,6 +15,9 @@
     /*  daily chart  */
     --hottest-degree-text-color: #e5a50b;
     --coldest-degree-text-color: #2265b7;
+    --hover-day-bg: theme('colors.yellow.100');
+    --active-day-bg: theme('colors.yellow.200');
+    --day-border-color: theme('colors.gray.300');
 
     --input-bg: theme('colors.white');
     --border-color: theme('colors.gray.200');
@@ -39,6 +42,9 @@
     /*  daily chart  */
     --hottest-degree-text-color: #e5a50b;
     --coldest-degree-text-color: #4092f7;
+    --hover-day-bg: #524e42;
+    --active-day-bg: var(--chart-bg-color);
+    --day-border-color: transparent;
 
     --input-bg: theme('colors.gray.600');
     --border-color: theme('colors.gray.400');

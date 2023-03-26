@@ -8,10 +8,12 @@ import {
     maxObjectValueOfKey,
     minObjectValueOfKey,
     setElementsData,
+    appendInAppropriateOrderAmongChilds,
 } from '@vendor/js/helpers';
 import makeDraggable from '@vendor/js/make-draggable';
 import * as pageLoading from '@vendor/js/page-loading';
 import {showFailedControlsSection} from '@vendor/js/failed-controls'
+import dayjs from '@vendor/js/dayjs';
 
 let areaChartOptions = {
     responsiveHeight: {
@@ -50,7 +52,7 @@ let lineChartOptions = {
     containerClasses: ['sm:gap-y-2', 'gap-y-1'],
 };
 
-export default function showWeather() {
+export function showWeather() {
     pageLoading.show('loading...');
 
     weatherOf({ lat: localStorage.lat, long: localStorage.long, timezone: localStorage.timezone })
@@ -128,7 +130,7 @@ function fillDailySummaryWeather(days) {
     const maxTemp = maxObjectValueOfKey('temperature_max', days);
     let lineChart = new LineChart(minTemp, maxTemp, lineChartOptions);
 
-    days.forEach((data) => {
+    days.forEach((data, index) => {
         let template = templateSelector.content.cloneNode(true);
         let lineChartSvg = lineChart.draw(data.temperature_min, data.temperature_max);
 
@@ -136,43 +138,52 @@ function fillDailySummaryWeather(days) {
         setElementsData('daily-summary-date', (el) => addDateTo(el, data.day, 'MMM D'), template);
         setElementsData('daily-summary-icon', (el) => addStaticIconTo(el, data.icon), template);
         setElementsData('daily-summary-line-chart', (el) => el.append(lineChartSvg), template);
+        template.querySelector('[alpine-data]').setAttribute('x-data', `{
+            isActive: ${index === 0},
+            dayIndex: ${index},
+        }`)
 
         dailySummarySection.append(template);
     });
 
-    fillDailyHoursData(days);
-
+    window.days = days;
     templateSelector.remove();
     makeDraggable('.daily-summary-draggable');
 }
 
-function fillDailyHoursData(days) {
+export function fillDayHoursData(day, dayIndex) {
     let dailyHoursSection = document.querySelector('#hours-of-day');
+    let container = dailyHoursSection.querySelector('#hours-of-day-container')
     let templateSelector = dailyHoursSection.querySelector('template');
-
     let newAreaChartOptions = cloneObject(areaChartOptions);
+    let template = templateSelector.content.cloneNode(true);
+
     newAreaChartOptions.height = 130;
     newAreaChartOptions.responsiveHeight = {
         360: 100,
     };
 
-    days.forEach((day) => {
-        let template = templateSelector.content.cloneNode(true);
-
-        setElementsData('day-hours-date', (el) => addDateTo(el, day.day, 'MMMM DD - dddd'), template);
-        fillHoursData({
-            hours: day.hourly,
-            onSelector: template.querySelector('div.day-hours'),
-            areaChartOptions: newAreaChartOptions,
-        });
-
-        dailyHoursSection.append(template);
+    template.querySelector('[day-index]').setAttribute('day-index', dayIndex)
+    setElementsData('day-hours-date', (el) => addDateTo(el, dayjs.tz(day.day), 'MMMM DD - dddd'), template);
+    fillHoursData({
+        hours: day.hourly,
+        onSelector: template.querySelector('div.day-hours'),
+        areaChartOptions: newAreaChartOptions,
     });
+    makeDraggable(undefined, template.querySelector('.day-hours-draggable'));
 
-    dailyHoursSection.querySelector('template').remove();
-    document.querySelectorAll('.day-hours-draggable').forEach((draggable) => {
-        makeDraggable(undefined, draggable);
-    });
+    appendInAppropriateOrderAmongChilds(
+        container,
+        template,
+        dayIndex,
+        'day-index',
+    );
+}
+
+export function removeDayHoursData(dayIndex) {
+    document.querySelector('#hours-of-day-container')
+        .querySelector(`div[day-index='${dayIndex}']`)
+        ?.remove();
 }
 
 function addStaticIconTo(el, icon) {
