@@ -11,6 +11,7 @@ import {
 } from '@vendor/js/helpers';
 import makeDraggable from '@vendor/js/make-draggable';
 import * as pageLoading from '@vendor/js/page-loading';
+import {showFailedControlsSection} from '@vendor/js/failed-controls'
 
 let areaChartOptions = {
     responsiveHeight: {
@@ -54,18 +55,17 @@ export default function showWeather() {
 
     weatherOf({ lat: localStorage.lat, long: localStorage.long, timezone: localStorage.timezone })
         .then((weather) => {
-            pageLoading.changeMsg('Parsing weather...');
             showHiddenElements();
             fillWeatherData(weather);
             pageLoading.hide();
         })
         .catch((err) => {
             console.log(err);
-            console.log('reloading page');
             alerts().swal().mixin('error', 'Failed to get weather');
+            pageLoading.hide();
+            showFailedControlsSection();
 
             setTimeout(function () {
-                localStorageClearExcept('theme');
                 location.reload();
             }, 5000);
         });

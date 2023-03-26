@@ -3,6 +3,7 @@
     --elements-bg: white;
 
     --text-color: theme('colors.gray.700');
+    --failed-text-color: theme('colors.red.800');
     --disabled-text-color: theme('colors.gray.400');
 
     /*  hourly chart  */
@@ -26,6 +27,7 @@
     --elements-bg: #353535;
 
     --text-color: theme('colors.gray.100');
+    --failed-text-color: theme('colors.red.500');
     --disabled-text-color: theme('colors.gray.400');
 
     /*  hourly chart  */
