@@ -7,7 +7,7 @@ export default async function getCities(keyword) {
     }
 
     return axios
-        .get('https://geocoding-api.open-meteo.com/v1/search?count=10', {
+        .get('https://geocoding-api.open-meteo.com/v1/search?count=15', {
             params: {
                 name: keyword,
             },
