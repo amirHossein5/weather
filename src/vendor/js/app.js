@@ -25,6 +25,6 @@ if (hasRequiredData()) {
 function showCityForm() {
     let locationForm = document.querySelector('#locationForm');
 
-    locationForm.closest('.hidden').classList.remove('hidden');
+    locationForm.classList.remove('hidden');
     locationForm.querySelector('#cityInput').focus();
 }
