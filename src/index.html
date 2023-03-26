@@ -224,12 +224,12 @@
         </main>
 
         <footer class="container mx-auto mt-16 flex hidden flex-wrap items-center justify-center gap-4 border-t py-2">
-            <a href="https://github.com/amirhossein5/weather" class="rounded-xl p-2 hover:bg-[var(--elements-bg)]">
                 <img src="icons/github-icon.svg" class="h-8 w-8" />
+            <a href="https://github.com/amirhossein5/weather" class="rounded-xl p-2 hover:bg-[var(--hover-color)]">
             </a>
             <section id="theme-toggler" class="hidden" x-data>
                 <div
-                    class="light cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
+                    class="light cursor-pointer rounded-xl p-2 hover:bg-[var(--hover-color)]"
                     x-on:click="changeThemeToLight()"
                 >
                     <svg
@@ -251,7 +251,7 @@
                     </svg>
                 </div>
                 <div
-                    class="dark cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
+                    class="dark cursor-pointer rounded-xl p-2 hover:bg-[var(--hover-color)]"
                     x-on:click="changeThemeToDark()"
                 >
                     <svg viewBox="0 0 24 24" fill="none" class="h-7 w-7">
