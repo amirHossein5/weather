@@ -139,7 +139,7 @@ function fillDailySummaryWeather(days) {
         setElementsData('daily-summary-icon', (el) => addStaticIconTo(el, data.icon), template);
         setElementsData('daily-summary-line-chart', (el) => el.append(lineChartSvg), template);
         template.querySelector('[alpine-data]').setAttribute('x-data', `{
-            isActive: ${index === 0},
+            isActive: ${index === 1},
             dayIndex: ${index},
         }`)
 
