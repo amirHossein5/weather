@@ -16,8 +16,10 @@
     --hottest-degree-text-color: #e5a50b;
     --coldest-degree-text-color: #0060d7;
     --hover-day-bg: theme('colors.yellow.100');
+    --hover-day-border-color: var(--hover-day-bg);
+    --day-border-color: theme('colors.gray.200');
     --active-day-bg: theme('colors.yellow.200');
-    --day-border-color: theme('colors.gray.300');
+    --active-day-border-color: var(--active-day-bg);
 
     --input-bg: theme('colors.white');
     --border-color: theme('colors.gray.200');
@@ -40,14 +42,20 @@
     --chart-section-bg-color: #353535;
 
     /*  daily chart  */
-    --hottest-degree-text-color: #e5a50b;
+    --hottest-degree-text-color: var(--chart-stroke-color);
     --coldest-degree-text-color: #4092f7;
     --hover-day-bg: #524e42;
-    --active-day-bg: var(--chart-bg-color);
+    --hover-day-border-color: var(--hover-day-bg);
     --day-border-color: transparent;
+    --active-day-bg: var(--chart-bg-color);
+    --active-day-border-color: var(--active-day-bg);
 
     --input-bg: theme('colors.gray.600');
     --border-color: theme('colors.gray.400');
 
     --hover-color: theme('colors.gray.600');
+}
+
+:root .active-day {
+    --hottest-degree-text-color: var(--chart-text-color);
 }
