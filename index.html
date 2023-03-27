@@ -12,8 +12,8 @@
         <title>Weather forecast</title>
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
         
-      <script type="module" crossorigin src="/weather/assets/main-fe9e1797.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-6ec12413.css">
+      <script type="module" crossorigin src="/weather/assets/main-a318adac.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-443c3513.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -189,7 +189,7 @@
                         >
                             <template>
                                 <div
-                                    class="flex shrink-0 flex-col rounded items-center border border-[var(--day-border-color)] hover:border-[var(--hover-day-border-color)] hover:bg-[var(--hover-day-bg)] transition bg-[var(--chart-section-bg-color)] pt-6 pb-3 w-24 lg:w-28"
+                                    class="flex w-24 shrink-0 flex-col items-center rounded border border-[var(--day-border-color)] bg-[var(--chart-section-bg-color)] pt-6 pb-3 transition hover:border-[var(--hover-day-border-color)] hover:bg-[var(--hover-day-bg)] lg:w-28"
                                     alpine-data
                                     x-bind:class="{ '!bg-[var(--active-day-bg)] border-[var(--active-day-border-color)] active-day': isActive}"
                                     x-init="
