@@ -14,7 +14,7 @@
 
     /*  daily chart  */
     --hottest-degree-text-color: #e5a50b;
-    --coldest-degree-text-color: #2265b7;
+    --coldest-degree-text-color: #0060d7;
     --hover-day-bg: theme('colors.yellow.100');
     --active-day-bg: theme('colors.yellow.200');
     --day-border-color: theme('colors.gray.300');
