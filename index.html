@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="A weather forecast website similar to gnome-weather app.
+                     Monitor the current weather conditions for your city, or anywhere in the world."
+        >
+
         <title>Weather forecast</title>
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
-
         
-      <script type="module" crossorigin src="/weather/assets/main-b8a58b66.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-740f78a2.css">
+      <script type="module" crossorigin src="/weather/assets/main-d7cb9f35.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-e757a2c3.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -17,7 +22,7 @@
                 <section class="">
                     <div class="flex flex-row items-center gap-2">
                         <div class="shrink-0" id="icons">
-                            <img class="w-20" data-current-weather-icon />
+                            <img class="h-20 w-20" data-current-weather-icon />
                         </div>
                         <div class="">
                             <div class="flex items-center gap-1 text-sm font-semibold">
@@ -52,10 +57,9 @@
         </header>
 
         <main class="pb-20">
-            <section class="hidden pt-0 sm:pt-5 md:pt-10">
+            <section class="hidden pt-0 sm:pt-5 md:pt-10" id="locationForm">
                 <section class="flex h-full justify-center xs:h-auto">
                     <form
-                        id="locationForm"
                         class="w-full rounded rounded-t-none border bg-[var(--elements-bg)] px-1 pt-8 pb-4 xs:w-auto sm:rounded-t sm:pt-6"
                         x-data="locationForm"
                     >
@@ -131,17 +135,27 @@
                 </section>
             </section>
 
+            <section class="hidden pt-0 sm:pt-5 md:pt-10 flex flex-col items-center" id="failed-controls">
+                <span class="text-[var(--failed-text-color)]">
+                    <span data-fail-message></span>,
+                </span>
+                <div class="mt-4 flex gap-x-2">
+                    <button type="button" class="py-1 px-2 bg-green-800 text-white rounded" onclick="location.reload()">Reload page</button>
+                    <button type="button" class="py-1 px-2 bg-green-800 text-white rounded" onclick="localStorageClearExcept('theme'); location.reload()">Clear selected city</button>
+                </div>
+            </section>
+
             <section class="container mx-auto hidden">
                 <!-- recent later hours -->
                 <div
-                    class="mt-4 flex cursor-grab select-none overflow-auto rounded-md border pb-0"
+                    class="mt-4 flex cursor-grab select-none overflow-auto rounded-t pb-1"
                     id="recent-later-hours"
                 >
                     <template>
-                        <div class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0">
+                        <div class="flex flex-col border-r border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0">
                             <div class="flex flex-col items-center gap-y-1 pb-2">
                                 <p class="text-sm font-semibold" data-hourly-datetime></p>
-                                <img class="w-10" data-hourly-icon />
+                                <img class="h-10 w-10" data-hourly-icon />
                             </div>
                             <div data-hourly-area-chart></div>
                             <div
@@ -165,16 +179,35 @@
 
                     <div class="flex justify-center">
                         <div
-                            class="daily-summary-draggable mt-4 flex cursor-grab select-none overflow-auto rounded-md border"
+                            class="daily-summary-draggable gap-x-1 mt-4 flex cursor-grab select-none overflow-auto pb-2 px-2"
                             id="daily-summary"
                         >
                             <template>
                                 <div
-                                    class="flex w-20 shrink-0 flex-col items-center border-r bg-[var(--chart-section-bg-color)] pt-6 pb-3 last:border-r-0 md:w-24 lg:w-28"
+                                    class="flex w-20 shrink-0 flex-col rounded items-center border border-[var(--day-border-color)] hover:border-[var(--hover-day-bg)] hover:bg-[var(--hover-day-bg)] transition bg-[var(--chart-section-bg-color)] pt-6 pb-3 md:w-24 lg:w-28"
+                                    alpine-data
+                                    x-bind:class="{ '!bg-[var(--active-day-bg)] border-[var(--hover-day-bg)]': isActive}"
+                                    x-init="
+                                        if (isActive) {
+                                            fillDayHoursData(window.days[dayIndex], dayIndex);
+                                        } else {
+                                            removeDayHoursData(dayIndex);
+                                        }
+                                    "
+                                    x-on:click="
+                                        isActive = !isActive;
+                                        if (isActive) {
+                                            fillDayHoursData(window.days[dayIndex], dayIndex);
+                                        } else {
+                                            removeDayHoursData(dayIndex);
+                                        }
+                                    "
                                 >
-                                    <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
-                                    <p data-daily-summary-date class="text-xs">Mar 9</p>
-                                    <img data-daily-summary-icon class="mt-2 w-10" />
+                                    <button type="button">
+                                        <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
+                                        <p data-daily-summary-date class="text-xs">Mar 9</p>
+                                        <img data-daily-summary-icon class="h-10 mt-2 w-10" />
+                                    </button>
 
                                     <div data-daily-summary-line-chart class="mt-3 grow"></div>
                                 </div>
@@ -184,21 +217,19 @@
 
                     <div id="hours-of-day" class="mt-20">
                         <template>
-                            <div class="mb-8 flex flex-col items-center">
+                            <div class="mb-8 flex flex-col items-center" day-index>
                                 <h1
                                     class="relative py-1 text-xl after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:block after:h-1 after:w-full after:bg-blue-400"
                                     data-day-hours-date
                                 ></h1>
                                 <div
-                                    class="day-hours day-hours-draggable mt-6 flex w-full cursor-grab select-none select-none overflow-auto rounded-md border pb-0"
+                                    class="day-hours day-hours-draggable mt-6 flex w-full cursor-grab select-none select-none overflow-auto rounded-t pb-1"
                                 >
                                     <template>
-                                        <div
-                                            class="flex flex-col border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0"
-                                        >
+                                        <div class="flex flex-col border-r border-r bg-[var(--chart-section-bg-color)] pt-4 last:border-r-0">
                                             <div class="flex flex-col items-center gap-y-1 pb-2">
                                                 <p class="text-sm font-semibold" data-hourly-datetime></p>
-                                                <img class="w-10" data-hourly-icon />
+                                                <img class="h-10 w-10" data-hourly-icon />
                                             </div>
                                             <div data-hourly-area-chart></div>
                                             <div
@@ -211,18 +242,20 @@
                                 </div>
                             </div>
                         </template>
+
+                        <div id="hours-of-day-container"></div>
                     </div>
                 </div>
             </section>
         </main>
 
         <footer class="container mx-auto mt-16 flex hidden flex-wrap items-center justify-center gap-4 border-t py-2">
-            <a href="https://github.com/amirhossein5/weather" class="rounded-xl p-2 hover:bg-[var(--elements-bg)]">
-                <img src="icons/github-icon.svg" class="w-8" />
+            <a href="https://github.com/amirhossein5/weather" class="rounded-xl p-2 hover:bg-[var(--hover-color)]">
+                <img alt="github page" src="icons/github-icon.svg" class="h-8 w-8" />
             </a>
             <section id="theme-toggler" class="hidden" x-data>
                 <div
-                    class="light cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
+                    class="light cursor-pointer rounded-xl p-2 hover:bg-[var(--hover-color)]"
                     x-on:click="changeThemeToLight()"
                 >
                     <svg
@@ -244,7 +277,7 @@
                     </svg>
                 </div>
                 <div
-                    class="dark cursor-pointer rounded-xl p-2 hover:bg-[var(--elements-bg)]"
+                    class="dark cursor-pointer rounded-xl p-2 hover:bg-[var(--hover-color)]"
                     x-on:click="changeThemeToDark()"
                 >
                     <svg viewBox="0 0 24 24" fill="none" class="h-7 w-7">
