@@ -153,16 +153,16 @@ export function appendInAppropriateOrderAmongChilds(appendTo, newElement, curren
     let children = Array.from(appendTo.children);
     let insertBefore;
 
-    for(let index in children) {
+    for (let index in children) {
         let child = children[index];
         let childValue = child.getAttribute(childsAttrName);
 
-        if(empty(childValue)) {
+        if (empty(childValue)) {
             continue;
         }
         if (currentValue < childValue) {
             insertBefore = child;
-            break
+            break;
         }
     }
 

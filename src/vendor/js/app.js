@@ -3,7 +3,7 @@ import Alpine from 'alpinejs';
 import alerts from '@vendor/js/alerts/alerts';
 import getCities from '@vendor/js/api/cities-api';
 import { hasRequiredData, localStorageClearExcept, setLocalStorageData } from '@vendor/js/helpers';
-import {showWeather, fillDayHoursData, removeDayHoursData} from '@vendor/js/show-weather';
+import { fillDayHoursData, removeDayHoursData, showWeather } from '@vendor/js/show-weather';
 import { applyTheme, changeThemeToDark, changeThemeToLight } from '@vendor/js/theme';
 
 Alpine.start();

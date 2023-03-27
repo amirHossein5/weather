@@ -2,18 +2,17 @@ import alerts from '@vendor/js/alerts/alerts';
 import weatherOf from '@vendor/js/api/weather-api';
 import AreaChart from '@vendor/js/chart/area-chart';
 import LineChart from '@vendor/js/chart/line-chart';
+import dayjs from '@vendor/js/dayjs';
+import { showFailedControlsSection } from '@vendor/js/failed-controls';
 import {
+    appendInAppropriateOrderAmongChilds,
     cloneObject,
-    localStorageClearExcept,
     maxObjectValueOfKey,
     minObjectValueOfKey,
     setElementsData,
-    appendInAppropriateOrderAmongChilds,
 } from '@vendor/js/helpers';
 import makeDraggable from '@vendor/js/make-draggable';
 import * as pageLoading from '@vendor/js/page-loading';
-import {showFailedControlsSection} from '@vendor/js/failed-controls'
-import dayjs from '@vendor/js/dayjs';
 
 let areaChartOptions = {
     responsiveHeight: {
@@ -138,10 +137,13 @@ function fillDailySummaryWeather(days) {
         setElementsData('daily-summary-date', (el) => addDateTo(el, data.day, 'MMM D'), template);
         setElementsData('daily-summary-icon', (el) => addStaticIconTo(el, data.icon), template);
         setElementsData('daily-summary-line-chart', (el) => el.append(lineChartSvg), template);
-        template.querySelector('[alpine-data]').setAttribute('x-data', `{
+        template.querySelector('[alpine-data]').setAttribute(
+            'x-data',
+            `{
             isActive: ${index === 1},
             dayIndex: ${index},
-        }`)
+        }`
+        );
 
         dailySummarySection.append(template);
     });
@@ -153,7 +155,7 @@ function fillDailySummaryWeather(days) {
 
 export function fillDayHoursData(day, dayIndex) {
     let dailyHoursSection = document.querySelector('#hours-of-day');
-    let container = dailyHoursSection.querySelector('#hours-of-day-container')
+    let container = dailyHoursSection.querySelector('#hours-of-day-container');
     let templateSelector = dailyHoursSection.querySelector('template');
     let newAreaChartOptions = cloneObject(areaChartOptions);
     let template = templateSelector.content.cloneNode(true);
@@ -163,7 +165,7 @@ export function fillDayHoursData(day, dayIndex) {
         360: 100,
     };
 
-    template.querySelector('[day-index]').setAttribute('day-index', dayIndex)
+    template.querySelector('[day-index]').setAttribute('day-index', dayIndex);
     setElementsData('day-hours-date', (el) => addDateTo(el, dayjs.tz(day.day), 'MMMM DD - dddd'), template);
     fillHoursData({
         hours: day.hourly,
@@ -172,18 +174,11 @@ export function fillDayHoursData(day, dayIndex) {
     });
     makeDraggable(undefined, template.querySelector('.day-hours-draggable'));
 
-    appendInAppropriateOrderAmongChilds(
-        container,
-        template,
-        dayIndex,
-        'day-index',
-    );
+    appendInAppropriateOrderAmongChilds(container, template, dayIndex, 'day-index');
 }
 
 export function removeDayHoursData(dayIndex) {
-    document.querySelector('#hours-of-day-container')
-        .querySelector(`div[day-index='${dayIndex}']`)
-        ?.remove();
+    document.querySelector('#hours-of-day-container').querySelector(`div[day-index='${dayIndex}']`)?.remove();
 }
 
 function addStaticIconTo(el, icon) {
