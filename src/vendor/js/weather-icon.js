@@ -1,4 +1,4 @@
-import { thereIsSun } from '@vendor/js/sun';
+import { thereIsSun } from '@vendor/js/there-is-sun';
 
 const ICON_MAP = new Map();
 const BASE = 'icons/weather';
