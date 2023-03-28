@@ -1,4 +1,4 @@
-import * as Dayjs from '@vendor/js/dayjs'
+import * as Dayjs from '@vendor/js/dayjs';
 
 export function thereIsSun({ lat, long, onDayjs }) {
     let sunsetDayJs = sunset({ lat, long, onDayjs });
@@ -13,7 +13,7 @@ export function sunset({ lat, long, onDayjs }) {
 }
 
 export function sunrise({ lat, long, onDayjs }) {
-    let dayjs = Dayjs.tz(onDayjs?.$x?.$timezone)
+    let dayjs = Dayjs.tz(onDayjs?.$x?.$timezone);
     return dayjs(onDayjs.$d.sunrise({ lat, long }));
 }
 

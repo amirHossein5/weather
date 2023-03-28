@@ -23,7 +23,9 @@ function getCurrentWeather(data) {
         datetime: dayjs(data.current_weather.time),
         temperature: roundTemp(data.current_weather.temperature),
         apparentTemperature: roundTemp(data.hourly.apparent_temperature[0]),
-        icon: weatherIcon.iconOf(data.current_weather.weathercode).getIconBasedOnDayOrNight(dayjs(data.current_weather.time)),
+        icon: weatherIcon
+            .iconOf(data.current_weather.weathercode)
+            .getIconBasedOnDayOrNight(dayjs(data.current_weather.time)),
     };
 }
 

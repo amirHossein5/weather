@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 
-export async function getTimezoneOf({lat, long}) {
+export async function getTimezoneOf({ lat, long }) {
     return axios
         .get('https://api.open-meteo.com/v1/forecast?timezone=auto', {
             params: {
