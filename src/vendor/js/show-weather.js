@@ -2,7 +2,6 @@ import alerts from '@vendor/js/alerts/alerts';
 import weatherOf from '@vendor/js/api/weather-api';
 import AreaChart from '@vendor/js/chart/area-chart';
 import LineChart from '@vendor/js/chart/line-chart';
-import dayjs from '@vendor/js/dayjs';
 import { showFailedControlsSection } from '@vendor/js/failed-controls';
 import {
     appendInAppropriateOrderAmongChilds,
@@ -166,7 +165,7 @@ export function fillDayHoursData(day, dayIndex) {
     };
 
     template.querySelector('[day-index]').setAttribute('day-index', dayIndex);
-    setElementsData('day-hours-date', (el) => addDateTo(el, dayjs.tz(day.day), 'MMMM DD - dddd'), template);
+    setElementsData('day-hours-date', (el) => addDateTo(el, day.day, 'MMMM DD - dddd'), template);
     fillHoursData({
         hours: day.hourly,
         onSelector: template.querySelector('div.day-hours'),
