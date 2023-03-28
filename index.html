@@ -12,7 +12,7 @@
         <title>Weather forecast</title>
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
         
-      <script type="module" crossorigin src="/weather/assets/main-bb1bb805.js"></script>
+      <script type="module" crossorigin src="/weather/assets/main-6a8b3ecb.js"></script>
       <link rel="stylesheet" href="/weather/assets/index-6230abe9.css">
     </head>
 
@@ -75,7 +75,7 @@
                             />
 
                             <button
-                                class="w-full rounded bg-green-800 p-2 text-white"
+                                class="w-full rounded bg-green-800 p-2 text-white xs:w-auto"
                                 x-bind:disabled="loading"
                                 x-bind:class="{ 'bg-green-900': loading }"
                                 type="button"
@@ -111,9 +111,9 @@
                                             x-text="', '+city.province"
                                         ></span>
                                         <span
-                                            class="ml-1 text-gray-400 text-sm sm:inline hidden"
-                                            x-text="`(${parseFloat(city.latitude).toFixed(2)}&deg;E, `+
-                                                    `${parseFloat(city.longitude).toFixed(2)}&deg;N)`
+                                            class="ml-1 hidden text-sm text-gray-400 sm:inline"
+                                            x-text="`(${city.latitude}&deg;E, `+
+                                                    `${city.longitude}&deg;N)`
                                             "
                                         ></span>
                                     </div>
@@ -321,6 +321,7 @@
                                 this.loading = false;
                             })
                             .catch((err) => {
+                                console.log(err)
                                 alerts().swal().mixin('error', 'failed to get cities..');
                                 this.loading = false;
                             });
@@ -337,7 +338,8 @@
                         window.setLocalStorageData({
                             lat: city.latitude,
                             long: city.longitude,
-                            timezone: city.timezone,
+                            fullLat: city.fullLat,
+                            fullLong: city.fullLong,
                             city: city.name,
                             province: city.province,
                         });
