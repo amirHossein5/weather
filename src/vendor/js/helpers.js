@@ -27,7 +27,7 @@ export function setLocalStorageData({ lat, long, fullLat, fullLong, city, provin
  * @return {Boolean}
  */
 export function hasRequiredData() {
-    const notBlankValueKeys = ['lat', 'long', 'city', 'province'];
+    const notBlankValueKeys = ['lat', 'long', 'fullLat', 'fullLong', 'city', 'province'];
     const requiredKeysButMayBlankValue = [];
 
     for (let index in requiredKeysButMayBlankValue) {
