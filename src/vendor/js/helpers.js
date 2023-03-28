@@ -10,14 +10,12 @@ export function setAttributes(el, attributes) {
  * Sets weather data in local storage
  * @param {String} lat
  * @param {String} long
- * @param {String} timezone
  * @param {String} city
  * @param {String} province
  */
-export function setLocalStorageData({ lat, long, timezone, city, province }) {
+export function setLocalStorageData({ lat, long, city, province }) {
     localStorage.setItem('lat', lat);
     localStorage.setItem('long', long);
-    localStorage.setItem('timezone', timezone);
     localStorage.setItem('city', city);
     localStorage.setItem('province', province);
 }
@@ -27,7 +25,7 @@ export function setLocalStorageData({ lat, long, timezone, city, province }) {
  * @return {Boolean}
  */
 export function hasRequiredData() {
-    const notBlankValueKeys = ['lat', 'long', 'timezone', 'city', 'province'];
+    const notBlankValueKeys = ['lat', 'long', 'city', 'province'];
     const requiredKeysButMayBlankValue = [];
 
     for (let index in requiredKeysButMayBlankValue) {

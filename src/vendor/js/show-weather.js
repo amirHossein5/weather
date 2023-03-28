@@ -53,7 +53,7 @@ let lineChartOptions = {
 export function showWeather() {
     pageLoading.show('loading...');
 
-    weatherOf({ lat: localStorage.lat, long: localStorage.long, timezone: localStorage.timezone })
+    weatherOf({ lat: localStorage.lat, long: localStorage.long })
         .then((weather) => {
             showHiddenElements();
             fillWeatherData(weather);
