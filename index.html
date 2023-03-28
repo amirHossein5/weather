@@ -12,8 +12,8 @@
         <title>Weather forecast</title>
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
         
-      <script type="module" crossorigin src="/weather/assets/main-6a8b3ecb.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-6230abe9.css">
+      <script type="module" crossorigin src="/weather/assets/main-9fc42bbe.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-a2db4e51.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -143,16 +143,16 @@
 
             <section class="flex hidden flex-col items-center pt-0 sm:pt-5 md:pt-10" id="failed-controls">
                 <span class="text-[var(--failed-text-color)]"> <span data-fail-message></span>, </span>
-                <div class="mt-4 flex gap-x-2">
-                    <button type="button" class="rounded bg-green-800 py-1 px-2 text-white" onclick="location.reload()">
-                        Reload page
-                    </button>
+                <div class="mt-4 flex flex-col items-center gap-y-4">
                     <button
                         type="button"
-                        class="rounded bg-green-800 py-1 px-2 text-white"
+                        class="rounded bg-green-800 py-2 px-2 text-white"
                         onclick="localStorageClearExcept('theme'); location.reload()"
                     >
                         Clear selected city
+                    </button>
+                    <button type="button" class="rounded flex-grow-0 bg-green-800 py-1 px-1 text-white" onclick="location.reload()">
+                        Reload page
                     </button>
                 </div>
             </section>
@@ -321,7 +321,7 @@
                                 this.loading = false;
                             })
                             .catch((err) => {
-                                console.log(err)
+                                console.log(err);
                                 alerts().swal().mixin('error', 'failed to get cities..');
                                 this.loading = false;
                             });
