@@ -141,16 +141,16 @@
 
             <section class="flex hidden flex-col items-center pt-0 sm:pt-5 md:pt-10" id="failed-controls">
                 <span class="text-[var(--failed-text-color)]"> <span data-fail-message></span>, </span>
-                <div class="mt-4 flex gap-x-2">
-                    <button type="button" class="rounded bg-green-800 py-1 px-2 text-white" onclick="location.reload()">
-                        Reload page
-                    </button>
+                <div class="mt-4 flex flex-col items-center gap-y-4">
                     <button
                         type="button"
-                        class="rounded bg-green-800 py-1 px-2 text-white"
+                        class="rounded bg-green-800 py-2 px-2 text-white"
                         onclick="localStorageClearExcept('theme'); location.reload()"
                     >
                         Clear selected city
+                    </button>
+                    <button type="button" class="rounded flex-grow-0 bg-green-800 py-1 px-1 text-white" onclick="location.reload()">
+                        Reload page
                     </button>
                 </div>
             </section>
