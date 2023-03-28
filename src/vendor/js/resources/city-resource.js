@@ -7,8 +7,8 @@ export function citiesResource(cities) {
 export function cityResource(city) {
     return {
         name: city.name,
-        latitude: parseFloat(city.lat).toFixed(4),
-        longitude: parseFloat(city.lon).toFixed(4),
+        latitude: parseFloat(city.lat).toFixed(2),
+        longitude: parseFloat(city.lon).toFixed(2),
         fullLat: city.lat,
         fullLong: city.lon,
         province: city.address?.state,
