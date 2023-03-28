@@ -133,7 +133,7 @@ export function empty(value) {
     if (value === null) return true;
 
     if (typeof value === 'string' && value.trim() === '') return true;
-    if (typeof value === 'boolean' && value === false) return true
+    if (typeof value === 'boolean' && value === false) return true;
     if (typeof value === 'object' && 'length' in value && value.length === 0) return true;
 
     return false;
