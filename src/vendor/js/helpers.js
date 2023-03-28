@@ -13,9 +13,11 @@ export function setAttributes(el, attributes) {
  * @param {String} city
  * @param {String} province
  */
-export function setLocalStorageData({ lat, long, city, province }) {
+export function setLocalStorageData({ lat, long, fullLat, fullLong, city, province }) {
     localStorage.setItem('lat', lat);
     localStorage.setItem('long', long);
+    localStorage.setItem('fullLat', fullLat);
+    localStorage.setItem('fullLong', fullLong);
     localStorage.setItem('city', city);
     localStorage.setItem('province', province);
 }
