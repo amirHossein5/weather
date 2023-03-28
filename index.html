@@ -12,8 +12,8 @@
         <title>Weather forecast</title>
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
         
-      <script type="module" crossorigin src="/weather/assets/main-a318adac.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-443c3513.css">
+      <script type="module" crossorigin src="/weather/assets/main-bb1bb805.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-6230abe9.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -29,7 +29,7 @@
                                 <span x-data class="flex flex-wrap">
                                     <span x-text="localStorage.city"></span>
                                     <span
-                                        x-show="localStorage.province !== '' && localStorage.province !== 'undefined'"
+                                        x-show="window.isNotEmpty(localStorage.province)"
                                         x-text="', '+localStorage.province"
                                     ></span>
                                 </span>
@@ -91,7 +91,7 @@
                             </button>
                         </div>
 
-                        <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
+                        <div x-show="window.isNotEmpty(cities)" class="mt-5"></div>
 
                         <div class="overflow-y-auto px-1">
                             <template x-for="(city, index) in cities">
@@ -104,18 +104,24 @@
                                     <div class="flex-shrink-0">
                                         <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
                                     </div>
-                                    <div class="flex flex-wrap">
+                                    <div class="flex flex-wrap items-center">
                                         <span x-text="city.name"></span>
                                         <span
-                                            x-show="city.province !== '' && city.province !== undefined"
+                                            x-show="window.isNotEmpty(city.province)"
                                             x-text="', '+city.province"
+                                        ></span>
+                                        <span
+                                            class="ml-1 text-gray-400 text-sm sm:inline hidden"
+                                            x-text="`(${parseFloat(city.latitude).toFixed(2)}&deg;E, `+
+                                                    `${parseFloat(city.longitude).toFixed(2)}&deg;N)`
+                                            "
                                         ></span>
                                     </div>
                                 </button>
                             </template>
                         </div>
 
-                        <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
+                        <div class="px-1" x-show="window.isNotEmpty(cities)">
                             <button
                                 class="mt-6 w-full rounded bg-green-800 p-2 text-white"
                                 x-bind:disabled="loading"
