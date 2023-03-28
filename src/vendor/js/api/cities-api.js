@@ -18,7 +18,9 @@ export default async function getCities(keyword) {
             }
 
             let cities = data.results.filter((city) => {
-                return 'admin1' in city;
+                return 'admin1' in city &&
+                    'latitude' in city &&
+                    'longitude' in city;
             });
 
             return citiesResource(cities);

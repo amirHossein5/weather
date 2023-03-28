@@ -102,11 +102,17 @@
                                     <div class="flex-shrink-0">
                                         <img x-bind:src="city.countryIconUrl" class="w-6 rounded sm:w-8" />
                                     </div>
-                                    <div class="flex flex-wrap">
+                                    <div class="flex flex-wrap items-center">
                                         <span x-text="city.name"></span>
                                         <span
                                             x-show="city.province !== '' && city.province !== undefined"
                                             x-text="', '+city.province"
+                                        ></span>
+                                        <span
+                                            class="ml-1 text-gray-400 text-sm"
+                                            x-text="`(${parseFloat(city.latitude).toFixed(2)}&deg;E, `+
+                                                    `${parseFloat(city.longitude).toFixed(2)}&deg;N)`
+                                            "
                                         ></span>
                                     </div>
                                 </button>
