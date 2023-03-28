@@ -7,10 +7,9 @@ export function citiesResource(cities) {
 export function cityResource(city) {
     return {
         name: city.name,
-        latitude: city.latitude,
-        longitude: city.longitude,
-        timezone: city.timezone,
-        province: city.admin1,
-        countryIconUrl: `https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/${city.country_code.toLowerCase()}.svg`,
+        latitude: parseFloat(city.lat).toFixed(4),
+        longitude: parseFloat(city.lon).toFixed(4),
+        province: city.address?.state,
+        countryIconUrl: `https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/${city.address?.country_code?.toLowerCase()}.svg`,
     };
 }

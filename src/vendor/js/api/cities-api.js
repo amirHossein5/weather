@@ -1,5 +1,6 @@
 import { isNotEmpty, empty } from '@vendor/js/helpers';
 import { citiesResource } from '@vendor/js/resources/city-resource';
+import {uniqBy} from 'lodash';
 import axios from 'axios';
 
 export default async function getCities(keyword) {
@@ -8,22 +9,23 @@ export default async function getCities(keyword) {
     }
 
     return axios
-        .get('https://geocoding-api.open-meteo.com/v1/search?count=15', {
+        .get('https://nominatim.openstreetmap.org/search.php?&limit=10&format=jsonv2&addressdetails=1', {
             params: {
-                name: keyword,
+                city: keyword,
             },
         })
         .then(({ data }) => {
-            if (!('results' in data) || data.results.length === 0) {
+            if (data.length === 0) {
                 return [];
             }
 
-            let cities = data.results.filter((city) => {
-                return 'admin1' in city && isNotEmpty(city.admin1);
-                'latitude' in city && isNotEmpty(city.latitude);
-                'longitude' in city && isNotEmpty(city.longitude);
+            let cities = data.filter((city) => {
+                return 'lat' in city && isNotEmpty(city.lat) &&
+                'lon' in city && isNotEmpty(city.lon);
             });
 
-            return citiesResource(cities);
+            cities.map((city) => city.name = cities[0].display_name.split(',')[0]);
+
+            return uniqBy(citiesResource(cities), 'latitude');
         });
 }
