@@ -1,18 +1,20 @@
-import dayjsModule from '@vendor/js/dayjs';
+import * as Dayjs from '@vendor/js/dayjs'
 
-export function thereIsSun({ lat, long, onDayjs = dayjsModule.tz() }) {
-    let sunsetDayJs = sunset({ lat, long, date: onDayjs.$d });
-    let sunriseDayJs = sunrise({ lat, long, date: onDayjs.$d });
+export function thereIsSun({ lat, long, onDayjs }) {
+    let sunsetDayJs = sunset({ lat, long, onDayjs });
+    let sunriseDayJs = sunrise({ lat, long, onDayjs });
 
     return onDayjs.isSameOrAfter(sunriseDayJs) && onDayjs.isBefore(sunsetDayJs);
 }
 
-export function sunset({ lat, long, date }) {
-    return dayjsModule.tz(date.sunset({ lat, long }));
+export function sunset({ lat, long, onDayjs }) {
+    let dayjs = Dayjs.tz(onDayjs?.$x?.$timezone);
+    return dayjs(onDayjs.$d.sunset({ lat, long }));
 }
 
-export function sunrise({ lat, long, date }) {
-    return dayjsModule.tz(date.sunrise({ lat, long }));
+export function sunrise({ lat, long, onDayjs }) {
+    let dayjs = Dayjs.tz(onDayjs?.$x?.$timezone)
+    return dayjs(onDayjs.$d.sunrise({ lat, long }));
 }
 
 /**
