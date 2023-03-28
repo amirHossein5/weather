@@ -1,8 +1,12 @@
-import dayjs from '@vendor/js/dayjs';
+import * as Dayjs from '@vendor/js/dayjs';
 import { cloneObject } from '@vendor/js/helpers';
 import * as weatherIcon from '@vendor/js/weather-icon';
 
+var dayjs;
+
 export default function weatherResource(data) {
+    dayjs = Dayjs.tz(data.timezone);
+
     return {
         current: getCurrentWeather(removePastHours(data)),
         recentLaterHours: getHourlyWeather(removePastHours(data), 0, 25),
@@ -16,10 +20,10 @@ export default function weatherResource(data) {
  */
 function getCurrentWeather(data) {
     return {
-        datetime: dayjs.tz(data.current_weather.time * 1000),
+        datetime: dayjs(data.current_weather.time),
         temperature: roundTemp(data.current_weather.temperature),
         apparentTemperature: roundTemp(data.hourly.apparent_temperature[0]),
-        icon: weatherIcon.iconOf(data.current_weather.weathercode).getIconBasedOnDayOrNight(dayjs.tz()),
+        icon: weatherIcon.iconOf(data.current_weather.weathercode).getIconBasedOnDayOrNight(dayjs(data.current_weather.time)),
     };
 }
 
@@ -28,8 +32,8 @@ function getHourlyWeather(data, ...sliceHours) {
 
     let sliceOfHours = sliceWeatherHours(data.hourly, ...sliceHours);
 
-    sliceOfHours.time.forEach((timestamp, index) => {
-        let dayjsDate = dayjs.tz(timestamp * 1000);
+    sliceOfHours.time.forEach((time, index) => {
+        let dayjsDate = dayjs(time);
         hourlyArr.push({
             datetime: dayjsDate,
             temperature: roundTemp(sliceOfHours.temperature_2m[index]),
@@ -47,9 +51,9 @@ function getHourlyWeather(data, ...sliceHours) {
 function getDailyWeather(data) {
     let dailyArr = [];
 
-    data.daily.time.forEach((timestamp, index) => {
+    data.daily.time.forEach((time, index) => {
         dailyArr.push({
-            day: dayjs.tz(timestamp * 1000),
+            day: dayjs(time),
             temperature_min: roundTemp(data.daily.temperature_2m_min[index]),
             temperature_max: roundTemp(data.daily.temperature_2m_max[index]),
             icon: weatherIcon.iconOf(data.daily.weathercode[index]).onDay,
@@ -83,12 +87,12 @@ function removePastHours(data) {
  * @return {Number}
  */
 function getCurrentHourIndex({ hourly, current_weather }) {
-    let currentTimeStamp = current_weather.time;
+    let currentTime = current_weather.time;
 
     for (let index in hourly.time) {
-        let timestamp = hourly.time[index];
+        let time = hourly.time[index];
 
-        if (timestamp < currentTimeStamp) {
+        if (time < currentTime) {
             continue;
         }
 
