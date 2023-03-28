@@ -27,7 +27,7 @@
                                 <span x-data class="flex flex-wrap">
                                     <span x-text="localStorage.city"></span>
                                     <span
-                                        x-show="localStorage.province !== '' && localStorage.province !== 'undefined'"
+                                        x-show="window.isNotEmpty(localStorage.province)"
                                         x-text="', '+localStorage.province"
                                     ></span>
                                 </span>
@@ -89,7 +89,7 @@
                             </button>
                         </div>
 
-                        <div x-show="cities !== undefined && cities.length !== 0" class="mt-5"></div>
+                        <div x-show="window.isNotEmpty(cities)" class="mt-5"></div>
 
                         <div class="overflow-y-auto px-1">
                             <template x-for="(city, index) in cities">
@@ -105,7 +105,7 @@
                                     <div class="flex flex-wrap items-center">
                                         <span x-text="city.name"></span>
                                         <span
-                                            x-show="city.province !== '' && city.province !== undefined"
+                                            x-show="window.isNotEmpty(city.province)"
                                             x-text="', '+city.province"
                                         ></span>
                                         <span
@@ -119,7 +119,7 @@
                             </template>
                         </div>
 
-                        <div class="px-1" x-show="cities !== undefined && cities.length !== 0">
+                        <div class="px-1" x-show="window.isNotEmpty(cities)">
                             <button
                                 class="mt-6 w-full rounded bg-green-800 p-2 text-white"
                                 x-bind:disabled="loading"

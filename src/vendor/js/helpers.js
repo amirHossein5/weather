@@ -129,9 +129,18 @@ export function localStorageClearExcept(key) {
 
 export function empty(value) {
     if (value === undefined) return true;
+    if (value === 'undefined') return true;
     if (value === null) return true;
+
     if (typeof value === 'string' && value.trim() === '') return true;
-    return value === true;
+    if (typeof value === 'boolean' && value === false) return true
+    if (typeof value === 'object' && 'length' in value && value.length === 0) return true;
+
+    return false;
+}
+
+export function isNotEmpty(value) {
+    return !empty(value);
 }
 
 export function appendInAppropriateOrderAmongChilds(appendTo, newElement, currentValue, childsAttrName) {

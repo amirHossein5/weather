@@ -1,5 +1,6 @@
 import { citiesResource } from '@vendor/js/resources/city-resource';
 import axios from 'axios';
+import {isNotEmpty} from '@vendor/js/helpers'
 
 export default async function getCities(keyword) {
     if (!keyword || keyword === '') {
@@ -18,9 +19,9 @@ export default async function getCities(keyword) {
             }
 
             let cities = data.results.filter((city) => {
-                return 'admin1' in city &&
-                    'latitude' in city &&
-                    'longitude' in city;
+                return 'admin1' in city && isNotEmpty(city.admin1)
+                    'latitude' in city && isNotEmpty(city.latitude)
+                    'longitude' in city && isNotEmpty(city.longitude);
             });
 
             return citiesResource(cities);
