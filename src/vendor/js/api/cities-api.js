@@ -1,9 +1,9 @@
-import { isNotEmpty } from '@vendor/js/helpers';
+import { isNotEmpty, empty } from '@vendor/js/helpers';
 import { citiesResource } from '@vendor/js/resources/city-resource';
 import axios from 'axios';
 
 export default async function getCities(keyword) {
-    if (!keyword || keyword === '') {
+    if (empty(keyword)) {
         return;
     }
 
