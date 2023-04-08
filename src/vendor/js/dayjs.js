@@ -9,7 +9,7 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isToday);
 dayjs.extend(isTomorrow);
 
-export function getInstace() {
+export function getInstance() {
     return dayjs;
 }
 
