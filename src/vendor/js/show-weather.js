@@ -132,10 +132,10 @@ function fillDailySummaryWeather(days) {
         let template = templateSelector.content.cloneNode(true);
         let lineChartSvg = lineChart.draw(data.temperature_min, data.temperature_max);
 
-        if(data.day.isToday()) {
+        if (data.day.isToday()) {
             template.querySelector('[data-daily-summary-is-today]')?.classList.remove('hidden');
         }
-        if(data.day.isTomorrow()){
+        if (data.day.isTomorrow()) {
             template.querySelector('[data-daily-summary-is-tomorrow]')?.classList.remove('hidden');
         }
 
