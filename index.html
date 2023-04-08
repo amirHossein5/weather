@@ -12,8 +12,8 @@
         <title>Weather forecast</title>
         <link rel="icon" type="image/png" href="icons/weather/static/sun.svg" />
         
-      <script type="module" crossorigin src="/weather/assets/main-9fc42bbe.js"></script>
-      <link rel="stylesheet" href="/weather/assets/index-a2db4e51.css">
+      <script type="module" crossorigin src="/weather/assets/main-61c0c54d.js"></script>
+      <link rel="stylesheet" href="/weather/assets/index-4d421a96.css">
     </head>
 
     <body class="bg-[var(--theme-bg)] text-[var(--text-color)]">
@@ -151,7 +151,11 @@
                     >
                         Clear selected city
                     </button>
-                    <button type="button" class="rounded flex-grow-0 bg-green-800 py-1 px-1 text-white" onclick="location.reload()">
+                    <button
+                        type="button"
+                        class="flex-grow-0 rounded bg-green-800 py-1 px-1 text-white"
+                        onclick="location.reload()"
+                    >
                         Reload page
                     </button>
                 </div>
@@ -182,9 +186,21 @@
                 <div class="mt-10">
                     <div class="flex justify-center">
                         <h1
-                            class="relative py-1 px-4 text-xl after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:block after:h-1 after:w-full after:bg-blue-400"
+                            class="flex items-center gap-1 relative py-1 pl-4 pr-3 text-xl after:absolute after:top-full after:right-0 after:left-0 after:m-auto after:block after:h-1 after:w-full after:bg-blue-400"
                         >
                             Daily
+
+                            <div x-data="{ show: false }" class="relative cursor-pointer pr-1" x-on:click="show=true" x-on:click.away="show=false" x-on:mouseenter="show=true" x-on:mouseleave="show=false">
+                                <!-- prettier-ignore -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="scale-90 fill-[var(--text-color)]">
+                                    <path d="M12 6a3.939 3.939 0 0 0-3.934 3.934h2C10.066 8.867 10.934 8 12 8s1.934.867 1.934 1.934c0 .598-.481 1.032-1.216 1.626a9.208 9.208 0 0 0-.691.599c-.998.997-1.027 2.056-1.027 2.174V15h2l-.001-.633c.001-.016.033-.386.441-.793.15-.15.339-.3.535-.458.779-.631 1.958-1.584 1.958-3.182A3.937 3.937 0 0 0 12 6zm-1 10h2v2h-2z"></path>
+                                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
+                                </svg>
+
+                                <div x-show="show" class="absolute -left-ful top-full text-center bg-[var(--elements-bg)] p-1 text-sm rounded border w-32 z-50">
+                                    Click on the day to see weather of that
+                                </div>
+                            </div>
                         </h1>
                     </div>
 
@@ -195,7 +211,7 @@
                         >
                             <template>
                                 <div
-                                    class="flex w-24 shrink-0 flex-col items-center rounded border border-[var(--day-border-color)] bg-[var(--chart-section-bg-color)] pt-6 pb-3 transition hover:border-[var(--hover-day-border-color)] hover:bg-[var(--hover-day-bg)] lg:w-28"
+                                    class="relative flex w-24 shrink-0 flex-col items-center rounded border border-[var(--day-border-color)] bg-[var(--chart-section-bg-color)] pt-6 pb-3 transition hover:border-[var(--hover-day-border-color)] hover:bg-[var(--hover-day-bg)] lg:w-28"
                                     alpine-data
                                     x-bind:class="{ '!bg-[var(--active-day-bg)] border-[var(--active-day-border-color)] active-day': isActive}"
                                     x-init="
@@ -214,6 +230,9 @@
                                         }
                                     "
                                 >
+                                    <p data-daily-summary-is-today class="absolute top-2 hidden text-xs opacity-75">today</p>
+                                    <p data-daily-summary-is-tomorrow class="absolute top-2 hidden text-xs opacity-75">tomorrow</p>
+
                                     <button type="button">
                                         <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
                                         <p data-daily-summary-date class="text-xs">Mar 9</p>
