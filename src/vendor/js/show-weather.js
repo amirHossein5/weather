@@ -139,7 +139,7 @@ function fillDailySummaryWeather(days) {
         template.querySelector('[alpine-data]').setAttribute(
             'x-data',
             `{
-            isActive: undefined,
+            isActive: false,
             dayIndex: ${index},
         }`
         );
