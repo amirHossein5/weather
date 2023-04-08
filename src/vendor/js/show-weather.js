@@ -132,6 +132,13 @@ function fillDailySummaryWeather(days) {
         let template = templateSelector.content.cloneNode(true);
         let lineChartSvg = lineChart.draw(data.temperature_min, data.temperature_max);
 
+        if(data.day.isToday()) {
+            template.querySelector('[data-daily-summary-is-today]')?.classList.remove('hidden');
+        }
+        if(data.day.isTomorrow()){
+            template.querySelector('[data-daily-summary-is-tomorrow]')?.classList.remove('hidden');
+        }
+
         setElementsData('daily-summary-week-day', (el) => addDateTo(el, data.day, 'ddd'), template);
         setElementsData('daily-summary-date', (el) => addDateTo(el, data.day, 'MMM D'), template);
         setElementsData('daily-summary-icon', (el) => addStaticIconTo(el, data.icon), template);

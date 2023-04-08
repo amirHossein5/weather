@@ -209,7 +209,7 @@
                         >
                             <template>
                                 <div
-                                    class="flex w-24 shrink-0 flex-col items-center rounded border border-[var(--day-border-color)] bg-[var(--chart-section-bg-color)] pt-6 pb-3 transition hover:border-[var(--hover-day-border-color)] hover:bg-[var(--hover-day-bg)] lg:w-28"
+                                    class="relative flex w-24 shrink-0 flex-col items-center rounded border border-[var(--day-border-color)] bg-[var(--chart-section-bg-color)] pt-6 pb-3 transition hover:border-[var(--hover-day-border-color)] hover:bg-[var(--hover-day-bg)] lg:w-28"
                                     alpine-data
                                     x-bind:class="{ '!bg-[var(--active-day-bg)] border-[var(--active-day-border-color)] active-day': isActive}"
                                     x-init="
@@ -228,6 +228,9 @@
                                         }
                                     "
                                 >
+                                    <p data-daily-summary-is-today class="absolute top-2 hidden text-xs opacity-75">today</p>
+                                    <p data-daily-summary-is-tomorrow class="absolute top-2 hidden text-xs opacity-75">tomorrow</p>
+
                                     <button type="button">
                                         <p data-daily-summary-week-day class="text-base font-semibold">Thu</p>
                                         <p data-daily-summary-date class="text-xs">Mar 9</p>

@@ -1,9 +1,13 @@
 import dayjs from 'dayjs';
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isToday from 'dayjs/plugin/isToday';
+import isTomorrow from 'dayjs/plugin/isTomorrow';
 import dayjsTz from 'dayjs/plugin/timezone';
 import dayjsUtc from 'dayjs/plugin/utc';
 
 dayjs.extend(isSameOrAfter);
+dayjs.extend(isToday);
+dayjs.extend(isTomorrow);
 
 export function getInstace() {
     return dayjs;
