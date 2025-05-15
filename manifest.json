@@ -1,0 +1,16 @@
+{
+    "name": "Weather forecast",
+    "short_name": "weather",
+    "theme_color": "#ffa500",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "./",
+    "start_url": "./",
+    "icons": [
+        {
+            "src": "icons/weather/static/sun.svg",
+            "sizes": "64x64",
+            "type": "image/svg"
+        }
+    ]
+}
